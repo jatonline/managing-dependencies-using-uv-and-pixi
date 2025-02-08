@@ -279,9 +279,9 @@ James Thomas <br> j.thomas@bristol.ac.uk
 <li><code>ls -A</code> note no venv - python not even installed</li>
 <li><a href="https://docs.astral.sh/uv/" class="uri">https://docs.astral.sh/uv/</a> and <code>curl -LsSf https://astral.sh/uv/install.sh | sh</code></li>
 <li><code>uv init --python 3.10</code> and note <code>ls -A</code> the contents (can remove hello.py)</li>
-<li><code>uv run python -V</code> to verify version (note downloads and uv run, no activating)</li>
+<li><code>uv run python -V</code> to verify version (<strong>note</strong> downloads python and creates venv)</li>
 <li><code>uv add numpy==1.21.6 scipy==1.7.3</code> (as before)</li>
-<li><code>uv run my_script.py</code> (python is assumed)</li>
+<li><code>uv run my_script.py</code> (<strong>note</strong> python is assumed and no need to activate)</li>
 <li><code>uv add matplotlib</code></li>
 <li><code>uv run my_script.py</code> (works and uses 3.8.4, same as before)</li>
 <li>What has happened?</li>
@@ -330,10 +330,11 @@ James Thomas <br> j.thomas@bristol.ac.uk
 <aside class="notes">
 <ul>
 <li>(<code>uv_lib_demo</code>)</li>
-<li>Switch to example for <code>uv init --lib</code></li>
+<li>Switch to example for <code>uv init --lib</code> but have made some other changes</li>
+<li><code>tree</code> to show layout, come back to notebooks, <code>cat src/my_project/probability.py</code></li>
 <li><code>cat pyproject.toml</code> including build system and project scripts</li>
 <li><code>uv run test-coin</code></li>
-<li><code>uv run --with jupyter jupyter lab</code> including importing and autoreloading</li>
+<li>To look at notebooks <code>uv run --with jupyter jupyter lab</code> including importing and autoreloading</li>
 </ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -351,17 +352,18 @@ James Thomas <br> j.thomas@bristol.ac.uk
 <h2>Other tips</h2>
 <aside class="notes">
 <ul>
-<li>Scripts with inline metadata
+<li>Scripts with inline metadata (<code>PEP 723</code>)
 <ul>
 <li><code>cd ../uv_script_demo</code></li>
 <li><code>cat my_script.py</code></li>
 <li><code>uv run my_script.py</code></li>
 <li>run again</li>
 </ul></li>
-<li>Global tools
+<li>Global tools - if you recall, like pipx
 <ul>
 <li><code>uvx ruff format my_script.py</code></li>
 <li><code>cat my_script.py</code> to show changes</li>
+<li>useful for running tools on PyPI without having to formally install them</li>
 </ul></li>
 </ul>
 <style type="text/css">
@@ -382,6 +384,7 @@ James Thomas <br> j.thomas@bristol.ac.uk
 <li><p>Find out more: <span class="emoji" data-emoji="link">🔗</span> <a href="https://docs.astral.sh/uv/">docs.astral.sh/uv</a> and <span class="emoji" data-emoji="link">🔗</span> <a href="https://pixi.sh/">pixi.sh</a></p></li>
 <li><p>Use for <strong>new projects</strong></p>
 <ul>
+<li><code>uv</code> if PyPI, <code>pixi</code> if Conda</li>
 <li>package in <code>src/</code></li>
 <li>commands <code>uv run test-coin</code></li>
 </ul></li>
