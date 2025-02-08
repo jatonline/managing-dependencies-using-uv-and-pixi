@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="index_files/libs/clipboard/clipboard.min.js"></script>
-<script src="index_files/libs/quarto-html/tabby.min.js"></script>
-<script src="index_files/libs/quarto-html/popper.min.js"></script>
-<script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="index_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-html/tabby.min.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.6.40">
 
-  <meta name="author" content="James Thomas j.thomas@bristol.ac.uk">
+  <meta name="author" content="James Thomas   j.thomas@bristol.ac.uk">
   <meta name="dcterms.date" content="2025-02-10">
-  <title>Managing dependencies using uv and pixi</title>
+  <title>Managing dependencies in a data science project using uv and pixi</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="index_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="index_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="site_libs/revealjs/dist/reveal.css">
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -30,11 +30,11 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-852060baddbc4083088b7a9f8b3431e2.css">
-  <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="index_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-12be0a422b2df927764e8febfa5fecfc.css">
+  <link href="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
     .reveal div.sourceCode {
       margin: 0;
@@ -128,12 +128,12 @@
     <div class="slides">
 
 <section id="title-slide" data-background-image="assets/logo.svg" data-background-position="top right" data-background-size="min(7em, 100%)" class="quarto-title-block center">
-  <h1 class="title">Managing dependencies using <code>uv</code> and <code>pixi</code></h1>
+  <h1 class="title">Managing dependencies in a data science project using <code>uv</code> and <code>pixi</code></h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-James Thomas<br>j.thomas@bristol.ac.uk 
+James Thomas <br> j.thomas@bristol.ac.uk 
 </div>
 </div>
 </div>
@@ -147,7 +147,6 @@ James Thomas<br>j.thomas@bristol.ac.uk
 <li><strong>Why</strong> might you want to use them?</li>
 <li>How do you <strong>configure</strong> them?</li>
 <li>Some <strong>examples</strong></li>
-<li>Some <strong>other tips</strong></li>
 </ul>
 <div class="fragment">
 <p>Note:</p>
@@ -159,16 +158,18 @@ James Thomas<br>j.thomas@bristol.ac.uk
 </section>
 <section id="what-does-uv-do" class="slide level2">
 <h2>What does <code>uv</code> do?</h2>
-<p>Similar functionality to <code>pip</code>, <code>pip-tools</code>, <code>poetry</code>, …</p>
+<p>Similar to <code>venv</code>, <code>pip</code>, <code>pip-tools</code>, <code>poetry</code>, …</p>
 <ul>
-<li>install <code>python</code></li>
-<li>install PyPI packages</li>
-<li>manage a virtual environment (<code>.venv</code>) automatically</li>
-<li>keep a lockfile up-to-date</li>
+<li>install <code>python</code> and PyPI packages</li>
+<li>manage a virtual environment (<code>.venv</code>) and lockfile</li>
 </ul>
 <aside class="notes">
 <ul>
-<li>…</li>
+<li>First released in February 2024, initially with functionality of venv, pip and pip-tools.</li>
+<li>But allows you to install different versions of the Python interpreter, if you don’t have them on your system already.</li>
+<li>Makes it good for bootstrapping where someone doesn’t currently have Python.</li>
+<li>Support for projects was introduced later in the year, keeping the installed packages up-to-date with a lockfile (more on this later).</li>
+<li>Development is fast-paced. Current version (0.5) first released November 2024 and most recent release (0.5.29) was 5 days ago.</li>
 </ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -182,38 +183,19 @@ James Thomas<br>j.thomas@bristol.ac.uk
           display:block!important;
       }</style></aside>
 <div class="fragment">
-<p>And:</p>
+<p>and:</p>
 <ul>
-<li>use disposable environments</li>
-<li>run isolated scripts</li>
-<li>install packages as globally-accessible tools</li>
+<li>cheap disposable environments (<code>jupyter lab</code>, <code>pytest</code>)</li>
+<li>inline script metadata (recreating bugs, demos)</li>
+<li>globally-accessible tools with <code>uvx</code> (<code>ruff</code>, <code>visidata</code>)</li>
 <li>cross-platform, easy to install, fast</li>
 </ul>
 <aside class="notes">
 <ul>
-<li>…</li>
-</ul>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</div>
-<div class="fragment">
-<aside class="notes">
-<ul>
-<li>Developed by Astral and Charlie Marsh, makers of ruff</li>
-<li>Developers also made CLI tools like ripgrep and bat</li>
-<li>First released in February 2024</li>
-<li>Started as venv, pip, pip-tools, then in ~May 2024 first project lockfile support added</li>
-<li>Version 0.4 was August 2024 - first to suport more general python projects that are not packages (e.g.&nbsp;data science projects)</li>
-<li>Current 0.5 version out November 2024 and current 0.5.29 was 5 days ago</li>
+<li>With uv, virtual environments are cheap to create. So you can temporarily add packages to the environment.</li>
+<li>For one-off scripts, you can specify the dependencies at the top of the script file (<code>PEP 723</code>).</li>
+<li>You don’t even have to install global tools - think <code>pipx</code> - they are downloaded and cached on demand.</li>
+<li>(More on these later)</li>
 </ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -231,23 +213,23 @@ James Thomas<br>j.thomas@bristol.ac.uk
 <section id="what-does-pixi-do" class="slide level2">
 <h2>What does <code>pixi</code> do?</h2>
 <div class="old">
-<p>Similar functionality to <code>uv</code>, …</p>
+<p>Similar to <code>uv</code>, …</p>
 <ul>
-<li>install <code>python</code> <span class="new">or <code>R</code> or something else</span></li>
-<li>install <span class="new">Conda and</span> PyPI packages</li>
-<li>manage a virtual environment (<span class="new"><code>.pixi</code></span>) automatically</li>
-<li>keep a lockfile up-to-date</li>
+<li>install <span class="new"><code>conda</code> packages </span> (<code>python</code> <span class="new">or <code>R</code></span>) or PyPI packages</li>
+<li>manage a virtual environment (<span class="new"><code>.pixi</code></span>) and lockfile</li>
 </ul>
-<p>And:</p>
+<p>and:</p>
 <ul>
 <li><span class="new">task runner</span></li>
-<li>install packages as globally-accessible tools</li>
+<li>globally-accessible tools (<span class="new">sync between devices</span>)</li>
 <li>cross-platform, easy to install, fast</li>
 </ul>
 </div>
 <aside class="notes">
 <ul>
-<li>…</li>
+<li>Pixi can be though of as the uv equivalent for the conda ecosystem.</li>
+<li>From the developers of mamba/micromamba.</li>
+<li>Advise check it out - remainder of this talk will focus on uv, but concepts are similar.</li>
 </ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -261,15 +243,21 @@ James Thomas<br>j.thomas@bristol.ac.uk
           display:block!important;
       }</style></aside>
 </section>
-<section id="why-use-a-lockfile" class="slide level2">
-<h2>Why use a lockfile?</h2>
-<p>…</p>
-<ul>
-<li>motiviating example with pip</li>
-</ul>
+<section id="what-are-lockfiles-and-why-use-them" class="slide level2">
+<h2>What are lockfiles and why use them?</h2>
 <aside class="notes">
 <ul>
-<li>…</li>
+<li>Promised an example (<code>pip_demo</code>). Will show what can go wrong if you use pip on its own.</li>
+<li>Start with a skeleton system with Python 3.10 installed and <code>ls -A</code> a venv created</li>
+<li><code>cat my_script.py</code> that performs simple hypothethis test using scipy</li>
+<li><code>cat requirements.txt</code> but can see this project was created a while ago, versions are old</li>
+<li><code>source .venv/bin/activate</code></li>
+<li><code>pip install -r requirements.txt</code> (numpy 1.21.6, scipy 1.7.3)</li>
+<li><code>python my_script.py</code></li>
+<li>Now want to do some plotting <code>pip install matplotlib</code> (3.10.0) which upgrades numpy to 2.2.2 (note the warning)</li>
+<li>Breaks <code>python my_script.py</code></li>
+<li><code>nano requirements.txt</code> and add <code>matplotlib</code></li>
+<li><code>pip install -r requirements.txt</code> works but needs to download multiple versions to find the right one (3.8.4)</li>
 </ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -283,15 +271,23 @@ James Thomas<br>j.thomas@bristol.ac.uk
           display:block!important;
       }</style></aside>
 </section>
-<section id="why-else-would-you-use-them" class="slide level2">
-<h2>Why else would you use them?</h2>
-<p>…</p>
-<ul>
-<li>no activating</li>
-</ul>
+<section id="what-would-this-workflow-look-like-with-uv" class="slide level2">
+<h2>What would this workflow look like with <code>uv</code>?</h2>
 <aside class="notes">
 <ul>
-<li>…</li>
+<li>(<code>uv_demo</code>)</li>
+<li><code>ls -A</code> note no venv - python not even installed</li>
+<li><a href="https://docs.astral.sh/uv/" class="uri">https://docs.astral.sh/uv/</a> and <code>curl -LsSf https://astral.sh/uv/install.sh | sh</code></li>
+<li><code>uv init --python 3.10</code> and note <code>ls -A</code> the contents (can remove hello.py)</li>
+<li><code>uv run python -V</code> to verify version (note downloads and uv run, no activating)</li>
+<li><code>uv add numpy==1.21.6 scipy==1.7.3</code> (as before)</li>
+<li><code>uv run my_script.py</code> (python is assumed)</li>
+<li><code>uv add matplotlib</code></li>
+<li><code>uv run my_script.py</code> (works and uses 3.8.4, same as before)</li>
+<li>What has happened?</li>
+<li><code>cat pyproject.toml</code> and <code>cat .python-version</code></li>
+<li><code>cat uv.lock</code> another toml file with all the matching versions of the packages installed, plus hashes.</li>
+<li>(version control all of these - automatically up-to-date)</li>
 </ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -305,17 +301,17 @@ James Thomas<br>j.thomas@bristol.ac.uk
           display:block!important;
       }</style></aside>
 </section>
-<section id="configuration" class="slide level2">
-<h2>Configuration</h2>
-<p>…</p>
-<ul>
-<li>pyproject.toml</li>
-<li>.python-version</li>
-<li>pixi.toml (or pyproject.toml)</li>
-</ul>
+<section id="configuring-uv-using-pyproject.toml" class="slide level2">
+<h2>Configuring <code>uv</code> using <code>pyproject.toml</code></h2>
 <aside class="notes">
 <ul>
-<li>…</li>
+<li>Can make changes to <code>pyproject.toml</code> and <code>.python-version</code> using a text editor or using <code>uv</code>. Shouldn’t edit <code>uv.lock</code> by hand.</li>
+<li>Showing this both ways</li>
+<li><code>uv python list</code></li>
+<li><code>uv python pin 3.13</code> but this won’t work as the packages are too old</li>
+<li><code>nano pyproject.toml</code> and change version constraints to <code>&gt;=</code></li>
+<li><code>uv sync --upgrade</code> to update all packages to latest versions possible, given the constraints</li>
+<li><code>uv run my_script.py</code></li>
 </ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -329,20 +325,15 @@ James Thomas<br>j.thomas@bristol.ac.uk
           display:block!important;
       }</style></aside>
 </section>
-<section id="demo-some-examples" class="slide level2">
-<h2>DEMO some examples</h2>
-<p>…</p>
-<ul>
-<li>uv init</li>
-<li>uv add</li>
-<li>uv run</li>
-<li>uv add again</li>
-<li>pyproject.toml edit - python version</li>
-<li>uv sync –update</li>
-</ul>
+<section id="applying-this-in-a-data-science-context" class="slide level2">
+<h2>Applying this in a data science context</h2>
 <aside class="notes">
 <ul>
-<li>…</li>
+<li>(<code>uv_lib_demo</code>)</li>
+<li>Switch to example for <code>uv init --lib</code></li>
+<li><code>cat pyproject.toml</code> including build system and project scripts</li>
+<li><code>uv run test-coin</code></li>
+<li><code>uv run --with jupyter jupyter lab</code> including importing and autoreloading</li>
 </ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -356,19 +347,22 @@ James Thomas<br>j.thomas@bristol.ac.uk
           display:block!important;
       }</style></aside>
 </section>
-<section id="demo-with-lib" class="slide level2">
-<h2>DEMO with –lib</h2>
-<p>…</p>
-<ul>
-<li>uv init –lib</li>
-<li>docs already there</li>
-<li>show build system in pyproject.toml</li>
-<li>show a notebook</li>
-<li>import from src (instead of messing with paths)</li>
-</ul>
+<section id="other-tips" class="slide level2">
+<h2>Other tips</h2>
 <aside class="notes">
 <ul>
-<li>…</li>
+<li>Scripts with inline metadata
+<ul>
+<li><code>cd ../uv_script_demo</code></li>
+<li><code>cat my_script.py</code></li>
+<li><code>uv run my_script.py</code></li>
+<li>run again</li>
+</ul></li>
+<li>Global tools
+<ul>
+<li><code>uvx ruff format my_script.py</code></li>
+<li><code>cat my_script.py</code> to show changes</li>
+</ul></li>
 </ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -382,63 +376,37 @@ James Thomas<br>j.thomas@bristol.ac.uk
           display:block!important;
       }</style></aside>
 </section>
-<section id="other-tips---global-tools" class="slide level2">
-<h2>other tips - global tools</h2>
+<section id="wrapping-up" class="slide level2">
+<h2>Wrapping up</h2>
 <ul>
-<li>ruff</li>
-<li>(or something else??)</li>
-<li>(quarto)</li>
-</ul>
-<aside class="notes">
+<li><p>Find out more: <span class="emoji" data-emoji="link">🔗</span> <a href="https://docs.astral.sh/uv/">docs.astral.sh/uv</a> and <span class="emoji" data-emoji="link">🔗</span> <a href="https://pixi.sh/">pixi.sh</a></p></li>
+<li><p>Use for <strong>new projects</strong></p>
 <ul>
-<li>…</li>
-</ul>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="other-tips---scripts-with-inline-metadata" class="slide level2">
-<h2>other tips - scripts with inline metadata</h2>
-<p>…</p>
-<aside class="notes">
+<li>package in <code>src/</code></li>
+<li>commands <code>uv run test-coin</code></li>
+</ul></li>
+<li><p>When working with someone<br><strong>new to Python</strong></p>
 <ul>
-<li>…</li>
-</ul>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="conclusions" class="slide level2">
-<h2>conclusions</h2>
-<p>…</p>
-<ul>
-<li>where to find out more</li>
-<li>would I recommend using them?</li>
+<li><code>uv run ...</code> could be in a script</li>
+</ul></li>
+<li><p><strong>Don’t</strong> use <code>pip</code>/<code>conda</code> by themselves</p></li>
 </ul>
 <div class="credits">
-<p><img data-src="assets/logo.svg" style="width:9em" alt="University of Bristol, Jean Golding Institute"></p>
-<p>James Thomas<br> j.thomas@bristol.ac.uk</p>
-<p>DOI</p>
+<p><img data-src="assets/logo.svg" style="width:9em" alt="University of Bristol, Jean Golding Institute"><br>
+James Thomas<br> j.thomas@bristol.ac.uk</p>
+<p><small>DOI: <a href="https://doi.org/10.5281/zenodo.14837979">10.5281/zenodo.14837979</a></small></p>
 </div>
+</section>
+<section id="bonus-material---pixi" class="slide level2">
+<h2>Bonus material - <code>pixi</code></h2>
 <aside class="notes">
 <ul>
-<li>…</li>
+<li>(<code>pixi_demo</code>)</li>
+<li><code>cat pyproject.toml</code></li>
+<li><code>cat pixi.lock</code></li>
+<li><code>pixi run test-coin</code></li>
+<li><code>pixi run format</code></li>
+<li><code>pixi run lab</code></li>
 </ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -451,6 +419,7 @@ James Thomas<br>j.thomas@bristol.ac.uk
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
+
 
 </section>
     </div>
@@ -461,19 +430,19 @@ James Thomas<br>j.thomas@bristol.ac.uk
 </div></div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="index_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="site_libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="index_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="index_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="index_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="site_libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="index_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="index_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="index_files/libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="index_files/libs/revealjs/plugin/math/math.js"></script>
+  <script src="site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="site_libs/revealjs/plugin/math/math.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>
@@ -755,7 +724,7 @@ James Thomas<br>j.thomas@bristol.ac.uk
       }
         var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
         var mailtoRegex = new RegExp(/^mailto:/);
-          var filterRegex = new RegExp('/' + window.location.host + '/');
+          var filterRegex = new RegExp("https:\/\/jatonline\.github\.io\/managing-dependencies-using-uv-and-pixi\/");
         var isInternal = (href) => {
             return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
         }
