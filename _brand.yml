@@ -1,0 +1,10 @@
+color:
+  primary: "#216e95"
+
+typography:
+  fonts:
+    - family: Inter
+      source: google
+  base: Inter
+  headings:
+    color: "#be2b31"

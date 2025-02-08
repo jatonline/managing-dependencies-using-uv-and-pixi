@@ -1,0 +1,12 @@
+format: revealjs
+theme: [default, assets/styles.scss]
+from: markdown+emoji
+progress: false
+history: false
+menu: false
+title-slide-attributes:
+  data-background-image: assets/logo.svg
+  data-background-size: min(7em, 100%)
+  data-background-position: top right
+project:
+  output-dir: _output

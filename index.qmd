@@ -1,0 +1,177 @@
+---
+title: Managing dependencies using `uv` and `pixi`
+author: James Thomas<br>j.thomas@bristol.ac.uk
+date: 2025-02-10
+---
+
+## Outline
+
+* **What are** `uv` and `pixi`?
+* **Why** might you want to use them?
+* How do you **configure** them?
+* Some **examples**
+* Some **other tips**
+
+. . .
+
+Note:
+
+* I am not the developer of these tools
+* You may well know more than me -- tips welcome :grin:
+
+## What does `uv` do?
+
+Similar functionality to `pip`, `pip-tools`, `poetry`, ...
+
+* install `python`
+* install PyPI packages
+* manage a virtual environment (`.venv`) automatically
+* keep a lockfile up-to-date
+
+::: {.notes}
+* ...
+:::
+
+. . .
+
+And:
+
+* use disposable environments 
+* run isolated scripts
+* install packages as globally-accessible tools
+* cross-platform, easy to install, fast
+
+::: {.notes}
+* ...
+:::
+
+. . .
+
+::: {.notes}
+* Developed by Astral and Charlie Marsh, makers of ruff
+* Developers also made CLI tools like ripgrep and bat
+* First released in February 2024
+* Started as venv, pip, pip-tools, then in ~May 2024 first project lockfile support added
+* Version 0.4 was August 2024 - first to suport more general python projects that are not packages (e.g. data science projects)
+* Current 0.5 version out November 2024 and current 0.5.29 was 5 days ago
+:::
+
+## What does `pixi` do?
+
+<div class="old">
+Similar functionality to `uv`, ...
+
+* install `python` <span class="new">or `R` or something else</span>
+* install <span class="new">Conda and</span> PyPI packages
+* manage a virtual environment (<span class="new">`.pixi`</span>) automatically
+* keep a lockfile up-to-date
+
+And:
+
+* <span class="new">task runner</span>
+* install packages as globally-accessible tools
+* cross-platform, easy to install, fast
+</div>
+
+::: {.notes}
+* ...
+:::
+
+## Why use a lockfile?
+
+...
+
+* motiviating example with pip
+
+::: {.notes}
+* ...
+:::
+
+## Why else would you use them?
+
+...
+
+* no activating
+
+::: {.notes}
+* ...
+:::
+
+## Configuration
+
+...
+
+* pyproject.toml
+* .python-version
+* pixi.toml (or pyproject.toml)
+
+::: {.notes}
+* ...
+:::
+
+## DEMO some examples
+
+...
+
+* uv init
+* uv add
+* uv run
+* uv add again
+* pyproject.toml edit - python version
+* uv sync --update
+
+::: {.notes}
+* ...
+:::
+
+## DEMO with --lib
+
+...
+
+* uv init --lib
+* docs already there
+* show build system in pyproject.toml
+* show a notebook
+* import from src (instead of messing with paths)
+
+::: {.notes}
+* ...
+:::
+
+## other tips - global tools
+
+* ruff
+* (or something else??)
+* (quarto)
+
+::: {.notes}
+* ...
+:::
+
+## other tips - scripts with inline metadata
+
+...
+
+::: {.notes}
+* ...
+:::
+
+## conclusions
+
+...
+
+* where to find out more
+* would I recommend using them?
+
+::: {.credits}
+![](assets/logo.svg){fig-alt="University of Bristol, Jean Golding Institute" width=9em}
+
+James Thomas<br>
+j.thomas@bristol.ac.uk
+
+DOI
+:::
+
+::: {.notes}
+* ...
+:::
