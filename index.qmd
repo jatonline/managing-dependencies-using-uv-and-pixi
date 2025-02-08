@@ -1,5 +1,5 @@
 ---
-title: Managing dependencies using `uv` and `pixi`
+title: Managing dependencies in a data science project using `uv` and `pixi`
 author: James Thomas<br>j.thomas@bristol.ac.uk
 date: 2025-02-10
 ---
@@ -10,7 +10,6 @@ date: 2025-02-10
 * **Why** might you want to use them?
 * How do you **configure** them?
 * Some **examples**
-* Some **other tips**
 
 . . .
 
@@ -21,110 +20,102 @@ Note:
 
 ## What does `uv` do?
 
-Similar functionality to `pip`, `pip-tools`, `poetry`, ...
+Similar to `venv`, `pip`, `pip-tools`, `poetry`, ...
 
-* install `python`
-* install PyPI packages
-* manage a virtual environment (`.venv`) automatically
-* keep a lockfile up-to-date
+* install `python` and PyPI packages
+* manage a virtual environment (`.venv`) and lockfile
 
 ::: {.notes}
-* ...
+* First released in February 2024, initially with functionality of venv, pip and pip-tools.
+* But allows you to install different versions of the Python interpreter, if you don't have them on your system already.
+* Makes it good for bootstrapping where someone doesn't currently have Python.
+* Support for projects was introduced later in the year, keeping the installed packages up-to-date with a lockfile (more on this later).
+* Development is fast-paced. Current version (0.5) first released November 2024 and most recent release (0.5.29) was 5 days ago.
 :::
 
 . . .
 
-And:
+and:
 
-* use disposable environments 
-* run isolated scripts
-* install packages as globally-accessible tools
+* cheap disposable environments (`jupyter lab`, `pytest`)
+* inline script metadata  (recreating bugs, demos)
+* globally-accessible tools with `uvx` (`ruff`, `visidata`)
 * cross-platform, easy to install, fast
 
 ::: {.notes}
-* ...
-:::
-
-. . .
-
-::: {.notes}
-* Developed by Astral and Charlie Marsh, makers of ruff
-* Developers also made CLI tools like ripgrep and bat
-* First released in February 2024
-* Started as venv, pip, pip-tools, then in ~May 2024 first project lockfile support added
-* Version 0.4 was August 2024 - first to suport more general python projects that are not packages (e.g. data science projects)
-* Current 0.5 version out November 2024 and current 0.5.29 was 5 days ago
+* With uv, virtual environments are cheap to create. So you can temporarily add packages to the environment.
+* For one-off scripts, you can specify the dependencies at the top of the script file (`PEP 723`).
+* You don't even have to install global tools - think `pipx` - they are downloaded and cached on demand.
+* (More on these later)
 :::
 
 ## What does `pixi` do?
 
 <div class="old">
-Similar functionality to `uv`, ...
+Similar to `uv`, ...
 
-* install `python` <span class="new">or `R` or something else</span>
-* install <span class="new">Conda and</span> PyPI packages
-* manage a virtual environment (<span class="new">`.pixi`</span>) automatically
-* keep a lockfile up-to-date
+* install <span class="new">`conda` packages </span> (`python` <span class="new">or `R`</span>) or PyPI packages
+* manage a virtual environment (<span class="new">`.pixi`</span>) and lockfile
 
-And:
+and:
 
 * <span class="new">task runner</span>
-* install packages as globally-accessible tools
+* globally-accessible tools (<span class="new">sync between devices</span>)
 * cross-platform, easy to install, fast
 </div>
 
 ::: {.notes}
-* ...
+* Pixi can be though of as the uv equivalent for the conda ecosystem.
+* From the developers of mamba/micromamba.
+* Advise check it out - remainder of this talk will focus on uv, but concepts are similar.
 :::
 
-## Why use a lockfile?
-
-...
-
-* motiviating example with pip
+## What are lockfiles and why use them?
 
 ::: {.notes}
-* ...
+* Promised an example. Will show what can go wrong if you use pip on its own.
+* Start with a skeleton system with Python 3.10 installed and `ls -A` a venv created
+* `cat my_script.py` that performs simple hypothethis test using scipy
+* `cat requirements.txt` but can see this project was created a while ago, versions are old
+* `source .venv/bin/activate`
+* `pip install -r requirements.txt` (numpy 1.21.6, scipy 1.7.3)
+* `python my_script.py`
+* Now want to do some plotting `pip install matplotlib` (3.10.0) which upgrades numpy to 2.2.2 (note the warning)
+* Breaks `python my_script.py`
+* `nano requirements.txt` and add `matplotlib`
+* `pip install -r requirements.txt` works but needs to download multiple versions to find the right one (3.8.4)
 :::
 
-## Why else would you use them?
-
-...
-
-* no activating
+## What would this workflow look like with `uv`?
 
 ::: {.notes}
-* ...
+* `ls -A` note no venv - python not even installed
+* <https://docs.astral.sh/uv/> and `curl -LsSf https://astral.sh/uv/install.sh | sh`
+* `uv init --python 3.10` and note `ls -A` the contents (can remove hello.py)
+* `uv run python -V` to verify version (note downloads and uv run, no activating)
+* `uv add numpy==1.21.6 scipy==1.7.3` (as before)
+* `uv run my_script.py` (python is assumed)
+* `uv add matplotlib`
+* `uv run my_script.py` (works and uses 3.8.4, same as before)
+* What has happened?
+* `cat pyproject.toml` and `cat .python-version`
+* `cat uv.lock` another toml file with all the matching versions of the packages installed, plus hashes.
+* (version control all of these - automatically up-to-date)
 :::
 
-## Configuration
-
-...
-
-* pyproject.toml
-* .python-version
-* pixi.toml (or pyproject.toml)
+## Configuring `uv` using `pyproject.toml`
 
 ::: {.notes}
-* ...
+* Can make changes to `pyproject.toml` and `.python-version` using a text editor or using `uv`. Shouldn't edit `uv.lock` by hand.
+* Showing this both ways
+* `uv python list`
+* `uv python pin 3.13` but this won't work as the packages are too old
+* `nano pyproject.toml` and change version constraints to `>=`
+* `uv sync --upgrade` to update all packages to latest versions possible, given the constraints
+* `uv run my_script.py`
 :::
 
-## DEMO some examples
-
-...
-
-* uv init
-* uv add
-* uv run
-* uv add again
-* pyproject.toml edit - python version
-* uv sync --update
-
-::: {.notes}
-* ...
-:::
-
-## DEMO with --lib
+## Applying this in a data science context
 
 ...
 

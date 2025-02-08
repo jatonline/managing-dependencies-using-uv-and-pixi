@@ -117,8 +117,8 @@ if ! shopt -oq posix; then
 fi
 
 PS1='\e[0;34m\W$ \e[m'
-alias cat='batcat'
-alias tree='tree -C'
-alias python='python3'
+alias cat='batcat -S --theme GitHub'
+alias tree='tree -C --filesfirst'
 
+cd uv_demo
 clear
