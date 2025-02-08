@@ -1,0 +1,5 @@
+services:
+  demo:
+    build: .
+    ports:
+      - "8889:8889"

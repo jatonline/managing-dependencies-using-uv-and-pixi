@@ -117,7 +117,7 @@ if ! shopt -oq posix; then
 fi
 
 PS1='\e[0;34m\W$ \e[m'
-alias cat='batcat -S --theme GitHub'
+alias cat='batcat --wrap never --theme GitHub'
 alias tree='tree -C --filesfirst'
 
 . "$HOME/.local/bin/env"

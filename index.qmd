@@ -1,6 +1,6 @@
 ---
 title: Managing dependencies in a data science project using `uv` and `pixi`
-author: James Thomas<br>j.thomas@bristol.ac.uk
+author: James Thomas <br> j.thomas@bristol.ac.uk
 date: 2025-02-10
 ---
 
@@ -73,7 +73,7 @@ and:
 ## What are lockfiles and why use them?
 
 ::: {.notes}
-* Promised an example. Will show what can go wrong if you use pip on its own.
+* Promised an example (`pip_demo`). Will show what can go wrong if you use pip on its own.
 * Start with a skeleton system with Python 3.10 installed and `ls -A` a venv created
 * `cat my_script.py` that performs simple hypothethis test using scipy
 * `cat requirements.txt` but can see this project was created a while ago, versions are old
@@ -89,12 +89,13 @@ and:
 ## What would this workflow look like with `uv`?
 
 ::: {.notes}
+* (`uv_demo`)
 * `ls -A` note no venv - python not even installed
 * <https://docs.astral.sh/uv/> and `curl -LsSf https://astral.sh/uv/install.sh | sh`
 * `uv init --python 3.10` and note `ls -A` the contents (can remove hello.py)
-* `uv run python -V` to verify version (note downloads and uv run, no activating)
+* `uv run python -V` to verify version (**note** downloads python and creates venv)
 * `uv add numpy==1.21.6 scipy==1.7.3` (as before)
-* `uv run my_script.py` (python is assumed)
+* `uv run my_script.py` (**note** python is assumed and no need to activate)
 * `uv add matplotlib`
 * `uv run my_script.py` (works and uses 3.8.4, same as before)
 * What has happened?
@@ -117,52 +118,58 @@ and:
 
 ## Applying this in a data science context
 
-...
-
-* uv init --lib
-* docs already there
-* show build system in pyproject.toml
-* show a notebook
-* import from src (instead of messing with paths)
-
 ::: {.notes}
-* ...
+* (`uv_lib_demo`)
+* Switch to example for `uv init --lib` but have made some other changes
+* `tree` to show layout, come back to notebooks, `cat src/my_project/probability.py`
+* `cat pyproject.toml` including build system and project scripts
+* `uv run test-coin`
+* To look at notebooks `uv run --with jupyter jupyter lab` including importing and autoreloading
 :::
 
-## other tips - global tools
-
-* ruff
-* (or something else??)
-* (quarto)
+## Other tips
 
 ::: {.notes}
-* ...
+* Scripts with inline metadata (`PEP 723`)
+    * `cd ../uv_script_demo`
+    * `cat my_script.py`
+    * `uv run my_script.py`
+    * run again
+* Global tools - if you recall, like pipx
+    * `uvx ruff format my_script.py`
+    * `cat my_script.py` to show changes
+    * useful for running tools on PyPI without having to formally install them
 :::
 
-## other tips - scripts with inline metadata
+## Wrapping up
 
-...
+* Find out more: :link: [docs.astral.sh/uv](https://docs.astral.sh/uv/) and :link: [pixi.sh](https://pixi.sh/)
 
-::: {.notes}
-* ...
-:::
+* Use for **new projects**
+    * `uv` if PyPI, `pixi` if Conda
+    * package in `src/`
+    * commands `uv run test-coin`
 
-## conclusions
+* When working with someone<br>**new to Python**
+    * `uv run ...` could be in a script
 
-...
-
-* where to find out more
-* would I recommend using them?
+* **Don't** use `pip`/`conda` by themselves
 
 ::: {.credits}
-![](assets/logo.svg){fig-alt="University of Bristol, Jean Golding Institute" width=9em}
-
+![](assets/logo.svg){fig-alt="University of Bristol, Jean Golding Institute" width=9em}  
 James Thomas<br>
 j.thomas@bristol.ac.uk
 
-DOI
+<small>DOI: [10.5281/zenodo.14837979](https://doi.org/10.5281/zenodo.14837979)</small>
 :::
 
+## Bonus material - `pixi`
+
 ::: {.notes}
-* ...
+* (`pixi_demo`)
+* `cat pyproject.toml`
+* `cat pixi.lock`
+* `pixi run test-coin`
+* `pixi run format`
+* `pixi run lab`
 :::

@@ -1,0 +1,41 @@
+[project]
+authors = [{name = "James Thomas", email = "j.thomas@bristol.ac.uk"}]
+dependencies = []
+description = "Add a short description here"
+name = "my_project"
+requires-python = ">= 3.11"
+version = "0.1.0"
+
+[tool.pixi.project]
+channels = ["conda-forge"]
+platforms = [
+    # "win-64",
+    "linux-64",
+    # "osx-64",
+    # "osx-arm64",
+]
+
+[tool.pixi.dependencies]
+numpy = ">=2.2.2,<3"
+scipy = ">=1.15.1,<2"
+
+[tool.pixi.pypi-dependencies]
+my_project = { path = ".", editable = true }
+
+[build-system]
+build-backend = "hatchling.build"
+requires = ["hatchling"]
+
+[tool.pixi.tasks]
+test-coin = "python -c 'from my_project.probability import test_coin; test_coin()'"
+
+[tool.pixi.environments]
+dev = {features = ["dev"]}
+
+[tool.pixi.feature.dev.dependencies]
+jupyter = "*"
+ruff = "*"
+
+[tool.pixi.feature.dev.tasks]
+lab = "jupyter lab"
+format = "ruff format src/"

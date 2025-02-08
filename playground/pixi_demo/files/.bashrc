@@ -120,5 +120,11 @@ PS1='\e[0;34m\W$ \e[m'
 alias cat='batcat --wrap never --theme GitHub'
 alias tree='tree -C --filesfirst'
 
-cd uv_demo
+export PATH=$PATH:$HOME/.pixi/bin
+eval "$(pixi completion --shell bash)"
+
+cd pixi_demo
 clear
+echo "Project was started with: pixi init --format pyproject"
+echo "                and then: pixi install --all"
+echo
