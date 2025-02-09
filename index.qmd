@@ -72,6 +72,8 @@ and:
 
 ## What are lockfiles and why use them?
 
+<video controls preload="none"><source type="video/mp4" src="videos/coding1.mp4"></video>
+
 ::: {.notes}
 * Promised an example (`pip_demo`). Will show what can go wrong if you use pip on its own.
 * Start with a skeleton system with Python 3.10 installed and `ls -A` a venv created
@@ -86,7 +88,9 @@ and:
 * `pip install -r requirements.txt` works but needs to download multiple versions to find the right one (3.8.4)
 :::
 
-## What would this workflow look like with `uv`?
+## What about the workflow with `uv`?
+
+<video controls preload="none"><source type="video/mp4" src="videos/coding2.mp4"></video>
 
 ::: {.notes}
 * (`uv_demo`)
@@ -106,6 +110,8 @@ and:
 
 ## Configuring `uv` using `pyproject.toml`
 
+<video controls preload="none"><source type="video/mp4" src="videos/coding3.mp4"></video>
+
 ::: {.notes}
 * Can make changes to `pyproject.toml` and `.python-version` using a text editor or using `uv`. Shouldn't edit `uv.lock` by hand.
 * Showing this both ways
@@ -118,6 +124,8 @@ and:
 
 ## Applying this in a data science context
 
+<video controls preload="none"><source type="video/mp4" src="videos/coding4.mp4"></video>
+
 ::: {.notes}
 * (`uv_lib_demo`)
 * Switch to example for `uv init --lib` but have made some other changes
@@ -128,6 +136,8 @@ and:
 :::
 
 ## Other tips
+
+<video controls preload="none"><source type="video/mp4" src="videos/coding5.mp4"></video>
 
 ::: {.notes}
 * Scripts with inline metadata (`PEP 723`)
@@ -164,6 +174,8 @@ j.thomas@bristol.ac.uk
 :::
 
 ## Bonus material - `pixi`
+
+<video controls preload="none"><source type="video/mp4" src="videos/coding6.mp4"></video>
 
 ::: {.notes}
 * (`pixi_demo`)
