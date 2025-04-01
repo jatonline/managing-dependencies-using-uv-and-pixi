@@ -1,12 +1,12 @@
 ---
-title: Managing dependencies in a data science project using `uv` and `pixi`
+title: Can others<br>reproduce your results? <small>Using 'uv' in a<br>Python data analysis project</small>
 author: James Thomas <br> j.thomas@bristol.ac.uk
-date: 2025-02-10
+date: 2025-04-01
 ---
 
 ## Outline
 
-* **What are** `uv` and `pixi`?
+* **What is** `uv`? (and `pixi`?)
 * **Why** might you want to use them?
 * How do you **configure** them?
 * Some **examples**
@@ -30,7 +30,7 @@ Similar to `venv`, `pip`, `pip-tools`, `poetry`, ...
 * But allows you to install different versions of the Python interpreter, if you don't have them on your system already.
 * Makes it good for bootstrapping where someone doesn't currently have Python.
 * Support for projects was introduced later in the year, keeping the installed packages up-to-date with a lockfile (more on this later).
-* Development is fast-paced. Current version (0.5) first released November 2024 and most recent release (0.5.29) was 5 days ago.
+* Development is fast-paced. Current version (0.6) first released February 2025 and most recent release (0.6.11) was 2 days ago.
 :::
 
 . . .
@@ -153,10 +153,10 @@ and:
 
 ## Wrapping up
 
-* Find out more: :link: [docs.astral.sh/uv](https://docs.astral.sh/uv/) and :link: [pixi.sh](https://pixi.sh/)
+* Find out more: :link: [docs.astral.sh/uv](https://docs.astral.sh/uv/) (and :link: [pixi.sh](https://pixi.sh/))
 
 * Use for **new projects**
-    * `uv` if PyPI, `pixi` if Conda
+    * `uv` if PyPI (`pixi` if Conda)
     * package in `src/`
     * commands `uv run test-coin`
 
