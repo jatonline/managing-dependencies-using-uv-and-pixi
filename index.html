@@ -6,12 +6,12 @@
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.6.40">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.6.42">
 
   <meta name="author" content="James Thomas   j.thomas@bristol.ac.uk">
-  <meta name="dcterms.date" content="2025-02-10">
-  <title>Managing dependencies in a data science project using uv and pixi</title>
+  <meta name="dcterms.date" content="2025-04-01">
+  <title>Can others reproduce your results? Using ‘uv’ in a Python data analysis project</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -30,7 +30,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-0e54b8a3b40a1ddcab98f0594dfdb76b.css">
+  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-c64100c0ffc7d0dfa10d261d2ac9d4b9.css">
   <link href="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -128,7 +128,7 @@
     <div class="slides">
 
 <section id="title-slide" data-background-image="assets/logo.svg" data-background-position="top right" data-background-size="min(7em, 100%)" class="quarto-title-block center">
-  <h1 class="title">Managing dependencies in a data science project using <code>uv</code> and <code>pixi</code></h1>
+  <h1 class="title">Can others<br>reproduce your results? <small>Using ‘uv’ in a<br>Python data analysis project</small></h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -138,12 +138,12 @@ James Thomas <br> j.thomas@bristol.ac.uk
 </div>
 </div>
 
-  <p class="date">2025-02-10</p>
+  <p class="date">2025-04-01</p>
 </section>
 <section id="outline" class="slide level2">
 <h2>Outline</h2>
 <ul>
-<li><strong>What are</strong> <code>uv</code> and <code>pixi</code>?</li>
+<li><strong>What is</strong> <code>uv</code>? (and <code>pixi</code>?)</li>
 <li><strong>Why</strong> might you want to use them?</li>
 <li>How do you <strong>configure</strong> them?</li>
 <li>Some <strong>examples</strong></li>
@@ -169,7 +169,7 @@ James Thomas <br> j.thomas@bristol.ac.uk
 <li>But allows you to install different versions of the Python interpreter, if you don’t have them on your system already.</li>
 <li>Makes it good for bootstrapping where someone doesn’t currently have Python.</li>
 <li>Support for projects was introduced later in the year, keeping the installed packages up-to-date with a lockfile (more on this later).</li>
-<li>Development is fast-paced. Current version (0.5) first released November 2024 and most recent release (0.5.29) was 5 days ago.</li>
+<li>Development is fast-paced. Current version (0.6) first released February 2025 and most recent release (0.6.11) was 2 days ago.</li>
 </ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
