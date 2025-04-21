@@ -1,0 +1,14 @@
+[project]
+authors = ["James Thomas <j.thomas@bristol.ac.uk>"]
+channels = ["conda-forge"]
+description = "Add a short description here"
+name = "pixi_demo_backup"
+platforms = ["linux-64", "osx-arm64", "win-64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+python = "3.10.*"
+numpy = "==1.21.6"
+scipy = "==1.7.3"
