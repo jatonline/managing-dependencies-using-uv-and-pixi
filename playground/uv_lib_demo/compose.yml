@@ -1,5 +1,0 @@
-services:
-  demo:
-    build: .
-    ports:
-      - "8888:8888"

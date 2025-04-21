@@ -1,0 +1,10 @@
+_default:
+	@just --list --unsorted
+
+# Build specified container(s) (defaults to all containers). Hint: run this in advance of a demo
+build DEMO="":
+	podman compose build -q {{DEMO}}
+
+# Run specified container
+run DEMO:
+	podman compose run --rm --service-ports {{DEMO}}

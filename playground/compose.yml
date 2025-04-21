@@ -1,0 +1,16 @@
+services:
+  pip_demo:
+    build: pip_demo
+
+  uv_demo:
+    build: uv_demo
+
+  uv_lib_demo:
+    build: uv_lib_demo
+    ports:
+      - "8888:8888"
+
+  pixi_demo:
+    build: pixi_demo
+    ports:
+      - "8889:8889"
