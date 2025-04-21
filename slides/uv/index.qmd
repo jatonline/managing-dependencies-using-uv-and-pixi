@@ -1,5 +1,5 @@
 ---
-title: Can others<br>reproduce your results?<br><small>Using 'uv' in a<br>Python data analysis project</small>
+title: Can others<br>reproduce your results?<br><small>Using `uv` in a<br>Python data analysis project</small>
 author: James Thomas <br> j.thomas@bristol.ac.uk
 date: 2025-04-01
 ---

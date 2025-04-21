@@ -1,5 +1,5 @@
 ---
-title: Can others reproduce<br>your `conda` results?<br><small>Using 'pixi' in a<br>Python data analysis project</small>
+title: Can others reproduce<br>your `conda` results?<br><small>Using `pixi` in a<br>Python data analysis project</small>
 author: James Thomas <br> j.thomas@bristol.ac.uk
 date: 2025-04-29
 ---
@@ -16,26 +16,51 @@ date: 2025-04-29
 Note:
 
 * I am not the developer of these tools
-* You may well know more than me -- tips welcome :grin:
+* You may well know more than me -- tips welcome, and thank you to my colleagues Léo and Rita for the feedback :grin:
 
 ## What does `pixi` do?
 
 Similar to `conda`, like `uv`, `poetry`, `npm`, ...
 
-* install `conda` packages (`python` or `R`)
-* or PyPI packages
+* install `conda` packages (`python` or `R`) or PyPI packages
 * manage a conda environment (`.pixi`) and lockfile
+* multi-platform support
+
+::: {.notes}
+* Set up a new (Python) project using modern best-practices for reproducibility.
+* Start using an existing project with minimal commands (less than with conda).
+* Keeps environment up-to-date more easily with other developers (which could be other people, or just you in the future!) Also makes it good for bootstrapping where someone doesn't currently have Python.
+* Supports development across multiple platforms (the tool is cross-platform, but it also allows developers to be on different platforms, too).
+:::
+
+. . .
 
 and:
 
-* task runner</span>
-* globally-accessible tools (+ sync between devices)
-* cross-platform, easy to install, fast
+* globally-accessible tools `pixi global` or `pixi exec`
+* task runner
+* create multiple environments
+* easy to install, fast
 
 ::: {.notes}
-* Pixi can be though of as the uv equivalent for the conda ecosystem.
-* From the developers of mamba/micromamba.
-* Advise check it out - remainder of this talk will focus on uv, but concepts are similar.
+Can:
+
+* Install (or just use) tools with pylint, ruff system-wide.
+* Define shortcuts for frequently-run commands (called tasks) - useful for new users.
+* Create separate environments for testing, documentation, so not all packages installed at once - useful if some dependencies are large.
+* Becomes more useful as a project grows.
+:::
+
+---
+
+### Number of `pixi` releases, by month
+
+![](pixi-releases.png){fig-alt="Bar chart showing number of monthly pixi releases since June 2023. There are 2-5 releases per month, gradually increasing over time. The maximum is currently 7 releases in March 2025."}
+
+::: {.notes}
+* From the developers of mamba (now used in conda - e.g. miniforge) and micromamba.
+* First released in June 2023, actively developed.
+* Many recent releases have been to make speed and resource-use improvements.
 :::
 
 ## What does `uv` do?
@@ -55,117 +80,120 @@ and:
 </div>
 
 ::: {.notes}
-* First released in February 2024, initially with functionality of venv, pip and pip-tools.
-* But allows you to install different versions of the Python interpreter, if you don't have them on your system already.
-* Makes it good for bootstrapping where someone doesn't currently have Python.
-* Support for projects was introduced later in the year, keeping the installed packages up-to-date with a lockfile (more on this later).
-* Development is fast-paced. Current version (0.6) first released February 2025 and most recent release (0.6.11) was 2 days ago.
-* With uv, virtual environments are cheap to create. So you can temporarily add packages to the environment.
-* For one-off scripts, you can specify the dependencies at the top of the script file (`PEP 723`).
-* You don't even have to install global tools - think `pipx` - they are downloaded and cached on demand.
-* (More on these later)
+* uv can be thought of as the pixi equivalent for the PyPI ecosystem (in fact, pixi uses it to install PyPI packages!)
+* Similarly allows you to install different versions of Python, so again, good for bootstrapping new users.
+* Advise check it out - remainder of this talk will focus on uv, but concepts are similar.
 :::
 
 ## What are lockfiles and why use them?
 
 ::: {.notes}
-* Promised an example (`pip_demo`). Will show what can go wrong if you use pip on its own.
-* Start with a skeleton system with Python 3.10 installed and `ls -A` a venv created
-* `cat my_script.py` that performs simple hypothethis test using scipy
-* `cat requirements.txt` but can see this project was created a while ago, versions are old
-* `source .venv/bin/activate`
-* `pip install -r requirements.txt` (numpy 1.21.6, scipy 1.7.3)
+* Promised an example (`conda_demo`). Will show why, when you use conda, you should be careful about keeping track of your dependencies.
+* `ls -A` - start with a skeleton system with conda installed, a my_script.py and an environment.yml file
+* `cat my_script.py` that performs simple hypothesis test using scipy
+* `cat environment.yml` is hand-crafted - can see this project was created a while ago, versions are old
+* `conda env create`
+* `conda activate my_env`
+* `which python`
+* `python -V`
 * `python my_script.py`
-* Now want to do some plotting `pip install matplotlib` (3.10.0) which upgrades numpy to 2.2.2 (note the warning)
-* Breaks `python my_script.py`
-* `nano requirements.txt` and add `matplotlib`
-* `pip install -r requirements.txt` works but needs to download multiple versions to find the right one (3.8.4)
+* Now want to do some more analysis using Pandas
+* `conda install pandas`
+* Should also note version and update the environment.yml at the same time
+* `nano environment.yml`
+* Need to remember to do this - if working by yourself and being careful, this may be fine
+* At some point, will forget
+* `conda env export` ???
+* But amongst desired packages there are lots of dependencies - unclear which is which
+* `conda env export --from-history` ???
+* But others will probably forget to commit, or forget the arguments
+* And can't recreate using the same versions of the dependencies
+* So should really export everything, and/or at some point will likely get a full export from someone else
 :::
 
-## What about the workflow with `uv`?
+## Someone else updates the project<br><small>(and they're using another platform)</small>
 
 ::: {.notes}
-* (`uv_demo`)
-* `ls -A` note no venv - python not even installed
-* <https://docs.astral.sh/uv/> and `curl -LsSf https://astral.sh/uv/install.sh | sh`
-* `uv init --python 3.10` and note `ls -A` the contents (can remove hello.py)
-* `uv run python -V` to verify version (**note** downloads python and creates venv)
-* `uv add numpy==1.21.6 scipy==1.7.3` (as before)
-* `uv run my_script.py` (**note** python is assumed and no need to activate)
-* `uv add matplotlib`
-* `uv run my_script.py` (works and uses 3.8.4, same as before)
+* `cd ../conda_demo_updated_on_mac`
+* `ls -A`
+* `conda env update --prune`
+* Error is confusing - can't even find scipy or python, but if eagle-eyed, might notice "osxarm64" (this export was from a Mac running on Apple Silicon, not Linux (WSL) running on Intel)
+* Could try removing the build specifications at the end of the version numbers (after the final `=`) - might work but probably won't if there are specific dependencies for one platform and not another
+* Would have to look through the diff manually and the imports in the project's Python code to try to reconstruct this list - very tedious, and this is only for 2 packages
+:::
+
+## What about the workflow with `pixi`?
+
+::: {.notes}
+* (`pixi_demo`)
+* `ls -A` note no conda or python installed (`python`)
+* <https://pixi.sh/latest/> and `curl -fsSL https://pixi.sh/install.sh | sh`
+* `pixi init`
+* `pixi add python=3.10`
+* `pixi run python -V` to verify version
+* `pixi add numpy==1.21.6 scipy==1.7.3` (as before)
+* `pixi run python my_script.py` (**note** no need to activate)
 * What has happened?
-* `cat pyproject.toml` and `cat .python-version`
-* `cat uv.lock` another toml file with all the matching versions of the packages installed, plus hashes.
-* (version control all of these - automatically up-to-date)
+* `ls -A`
+* `cat pixi.toml`
+* `cat pixi.lock` (a YAML file with all the matching versions of the packages installed, plus hashes)
+* (version control both of these - automatically up-to-date)
+* `pixi list` to view the actual installed packages more comfortably
+* Finally, `ls -A .pixi` (could delete this, and it would be created again)
 :::
 
-## Configuring `uv` using `pyproject.toml`
+## Making changes to the project<br><small>(adding new dependencies and new developers)</small>
 
 ::: {.notes}
-* Can make changes to `pyproject.toml` and `.python-version` using a text editor or using `uv`. Shouldn't edit `uv.lock` by hand.
-* Showing this both ways
-* `uv python list`
-* `uv python pin 3.13` but this won't work as the packages are too old
-* `nano pyproject.toml` and change version constraints to `>=`
-* `uv sync --upgrade` to update all packages to latest versions possible, given the constraints
-* `uv run my_script.py`
+* Now want to add pandas
+* `pixi add pandas`
+* `cat pixi.toml`
+* `pixi list`
+* Now some new developers, on Mac and Windows - could edit `pixi.toml` by hand, but can use the CLI
+* `pixi workspace platform osx-arm64 win-64`
+* `cat pixi.toml`
+* `cat pixi.lock`
+* `pixi tree`
 :::
 
 ## Applying this in a data science context
 
 ::: {.notes}
-* (`uv_lib_demo`)
-* Switch to example for `uv init --lib` but have made some other changes
-* `tree` to show layout, come back to notebooks, `cat src/my_project/probability.py`
-* `cat pyproject.toml` including build system and project scripts
-* `uv run test-coin`
-* To look at notebooks `uv run --with jupyter jupyter lab` including importing and autoreloading
+* (`pixi_lib_demo`)
+* Started with `pixi init --format pyproject` which creates `pyproject.toml`, not a `pixi.toml` (used by other Python tools as well)
+* `tree` to show layout
+* `cat pyproject.toml` (similar to `pixi.toml` however sections start with `tool.pixi.` - talk through, however unlikely time to go through everything)
+* `pixi run lab`
+* Look at notebooks including importing `probability.py` and autoreloading
 :::
 
 ## Other tips
 
 ::: {.notes}
-* Scripts with inline metadata (`PEP 723`)
-    * `cd ../uv_script_demo`
-    * `cat my_script.py`
-    * `uv run my_script.py`
-    * run again
-* Global tools - if you recall, like pipx
-    * `uvx ruff format my_script.py`
-    * `cat my_script.py` to show changes
-    * useful for running tools on PyPI without having to formally install them
+* Global tools
+    * `pixi exec ruff` (faster the next time)
+    * `pixi tool install quarto` (then just `quarto`)
+    * useful for running tools from conda without having to install them separately
 :::
 
 ## Wrapping up
 
-* Find out more: :link: [docs.astral.sh/uv](https://docs.astral.sh/uv/) (and :link: [pixi.sh](https://pixi.sh/))
+* Find out more: :link: [pixi.sh](https://pixi.sh/) (and :link: [docs.astral.sh/uv](https://docs.astral.sh/uv/))
 
 * Use for **new projects**
-    * `uv` if PyPI (`pixi` if Conda)
+    * `pixi` if Conda (`uv` if just PyPI)
     * package in `src/`
-    * commands `uv run test-coin`
+    * commands `pixi run analysis`
 
 * When working with someone<br>**new to Python**
-    * `uv run ...` could be in a script
+    * `pixi run dashboard`<br>oenly command they need?
 
-* **Don't** use `pip`/`conda` by themselves
+* **Don't** use `conda`/`pip` by themselves
 
 ::: {.credits}
 ![](../../assets/logo.svg){fig-alt="University of Bristol, Jean Golding Institute" width=9em}<br>
 James Thomas<br>
 j.thomas@bristol.ac.uk
 
-<small>DOI: [10.5281/zenodo.14837979](https://doi.org/10.5281/zenodo.14837979)</small>
-:::
-
-## Bonus material - `uv`
-
-::: {.notes}
-* (`pixi_demo`)
-* `cat pyproject.toml`
-* `cat pixi.lock`
-* `pixi run test-coin`
-* `pixi run format`
-* `pixi run lab`
+<small>DOI: [... ... ...](https://doi.org/10.5281/zenodo.14837979)</small>
 :::
