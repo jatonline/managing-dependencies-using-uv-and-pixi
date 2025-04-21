@@ -14,13 +14,14 @@ Choose the tool you'd like to know more about:
 - [Video of the RSE South West talk](https://zenodo.org/records/14837979) (<time datetime="2025-02-10">10 February 2025</time>)<br>[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14837979.svg)](https://doi.org/10.5281/zenodo.14837979)
 - [uv project website](https://docs.astral.sh/uv/)
 
-### pixi
+### Pixi
 
-- (in development)
+- [Slides](./slides/pixi/) (<time datetime="2025-04-29">29 April 2025</time>)
+- [Pixi project website](https://pixi.sh)
 
 ## Development
 
-See the [GitHub repo](https://github.com/jatonline/managing-dependencies-using-uv-and-pixi).
+See the [GitHub repo](https://github.com/jatonline/managing-dependencies-using-uv-and-pixi/blob/main/README.md#development).
 
 ## Licence
 

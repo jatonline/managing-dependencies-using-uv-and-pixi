@@ -7,6 +7,6 @@ format:
     menu: false
     search: false
     title-slide-attributes:
-      data-background-image: assets/logo.svg
-      data-background-size: min(7em, 100%)
-      data-background-position: top right
+      data-background-image: ../assets/logo.svg
+      data-background-size: min(14rem, 100%)
+      data-background-position: top 2rem right 2rem

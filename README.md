@@ -6,14 +6,15 @@ Choose the tool you'd like to know more about:
 
 ### uv
 
-- [Slides](https://jatonline.github.io/managing-dependencies-using-uv-and-pixi/) (<time datetime="2025-04-01">1 April 2025</time>, with embedded videos)
+- [Slides](https://jatonline.github.io/managing-dependencies-using-uv-and-pixi/slides/uv/) (<time datetime="2025-04-01">1 April 2025</time>, with embedded videos)
 - [Video of the Lunch and Learn talk](https://youtu.be/OJ_-rkoeol8) (<time datetime="2025-04-01">1 April 2025</time>)
 - [Video of the RSE South West talk](https://zenodo.org/records/14837979) (<time datetime="2025-02-10">10 February 2025</time>)<br>[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14837979.svg)](https://doi.org/10.5281/zenodo.14837979)
 - [uv project website](https://docs.astral.sh/uv/)
 
-### pixi
+### Pixi
 
-- (in development)
+- [Slides](https://jatonline.github.io/managing-dependencies-using-uv-and-pixi/slides/pixi/) (<time datetime="2025-04-29">29 April 2025</time>)
+- [Pixi project website](https://pixi.sh)
 
 ## Development
 
