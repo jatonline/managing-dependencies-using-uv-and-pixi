@@ -9,5 +9,7 @@ USER ubuntu
 WORKDIR /home/ubuntu
 
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+
 COPY --chown=ubuntu files/ /home/ubuntu/
-RUN cd /home/ubuntu/uv_lib_demo && /home/ubuntu/.local/bin/uv sync
+
+RUN cd uv_lib_demo && ../.local/bin/uv sync

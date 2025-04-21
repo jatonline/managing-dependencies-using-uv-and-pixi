@@ -13,4 +13,5 @@ USER ubuntu
 WORKDIR /home/ubuntu
 
 RUN python3 -m venv --prompt venv /home/ubuntu/pip_demo/.venv
+
 COPY --chown=ubuntu files/ /home/ubuntu/

@@ -11,6 +11,7 @@ WORKDIR /home/ubuntu
 RUN wget -q https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh && \
     bash Miniforge3-Linux-x86_64.sh -b && \
     rm Miniforge3-Linux-x86_64.sh
+
 COPY --chown=ubuntu files/ /home/ubuntu/
 
 RUN miniforge3/bin/conda env create -n backup_env -f conda_demo/environment.yml
