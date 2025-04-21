@@ -10,6 +10,12 @@ services:
     ports:
       - "8888:8888"
 
+  conda_demo:
+    build: conda_demo
+
+  pixi_demo:
+    build: pixi_demo
+
   pixi_lib_demo:
     build: pixi_lib_demo
     ports:
