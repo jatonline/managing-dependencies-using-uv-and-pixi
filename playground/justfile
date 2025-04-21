@@ -3,7 +3,7 @@ _default:
 
 # Build specified container(s) (defaults to all containers). Hint: run this in advance of a demo
 build DEMO="":
-	podman compose build -q {{DEMO}}
+	podman compose --parallel 1 build -q {{DEMO}}
 
 # Run specified container
 run DEMO:
