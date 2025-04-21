@@ -2,15 +2,4 @@ project:
   type: website
   render:
     - index.qmd
-format:
-  revealjs:
-    theme: [default, assets/styles.scss]
-    from: markdown+emoji
-    progress: false
-    history: false
-    menu: false
-    search: false
-    title-slide-attributes:
-      data-background-image: assets/logo.svg
-      data-background-size: min(7em, 100%)
-      data-background-position: top right
+    - slides/**/*.qmd

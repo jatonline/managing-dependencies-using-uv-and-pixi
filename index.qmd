@@ -1,187 +1,27 @@
 ---
-title: Can others<br>reproduce your results? <small>Using 'uv' in a<br>Python data analysis project</small>
+title: Can others reproduce your results?<br><small>Using `uv` and `pixi` in Python data analysis projects</small>
 author: James Thomas <br> j.thomas@bristol.ac.uk
-date: 2025-04-01
 ---
 
-## Outline
+## Viewing the resources
 
-* **What is** `uv`? (and `pixi`?)
-* **Why** might you want to use them?
-* How do you **configure** them?
-* Some **examples**
+Choose the tool you'd like to know more about:
 
-. . .
+### uv
 
-Note:
+- [Slides](./slides/uv/) (<time datetime="2025-04-01">1 April 2025</time>, with embedded videos)
+- [Video of the Lunch and Learn talk](https://youtu.be/OJ_-rkoeol8) (<time datetime="2025-04-01">1 April 2025</time>)
+- [Video of the RSE South West talk](https://zenodo.org/records/14837979) (<time datetime="2025-02-10">10 February 2025</time>)<br>[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14837979.svg)](https://doi.org/10.5281/zenodo.14837979)
+- [uv project website](https://docs.astral.sh/uv/)
 
-* I am not the developer of these tools
-* You may well know more than me -- tips welcome :grin:
+### pixi
 
-## What does `uv` do?
+- (in development)
 
-Similar to `venv`, `pip`, `pip-tools`, `poetry`, ...
+## Development
 
-* install `python` and PyPI packages
-* manage a virtual environment (`.venv`) and lockfile
+See the [GitHub repo](https://github.com/jatonline/managing-dependencies-using-uv-and-pixi).
 
-::: {.notes}
-* First released in February 2024, initially with functionality of venv, pip and pip-tools.
-* But allows you to install different versions of the Python interpreter, if you don't have them on your system already.
-* Makes it good for bootstrapping where someone doesn't currently have Python.
-* Support for projects was introduced later in the year, keeping the installed packages up-to-date with a lockfile (more on this later).
-* Development is fast-paced. Current version (0.6) first released February 2025 and most recent release (0.6.11) was 2 days ago.
-:::
+## Licence
 
-. . .
-
-and:
-
-* cheap disposable environments (`jupyter lab`, `pytest`)
-* inline script metadata  (recreating bugs, demos)
-* globally-accessible tools with `uvx` (`ruff`, `visidata`)
-* cross-platform, easy to install, fast
-
-::: {.notes}
-* With uv, virtual environments are cheap to create. So you can temporarily add packages to the environment.
-* For one-off scripts, you can specify the dependencies at the top of the script file (`PEP 723`).
-* You don't even have to install global tools - think `pipx` - they are downloaded and cached on demand.
-* (More on these later)
-:::
-
-## What does `pixi` do?
-
-<div class="old">
-Similar to `uv`, ...
-
-* install <span class="new">`conda` packages </span> (`python` <span class="new">or `R`</span>) or PyPI packages
-* manage a virtual environment (<span class="new">`.pixi`</span>) and lockfile
-
-and:
-
-* <span class="new">task runner</span>
-* globally-accessible tools (<span class="new">sync between devices</span>)
-* cross-platform, easy to install, fast
-</div>
-
-::: {.notes}
-* Pixi can be though of as the uv equivalent for the conda ecosystem.
-* From the developers of mamba/micromamba.
-* Advise check it out - remainder of this talk will focus on uv, but concepts are similar.
-:::
-
-## What are lockfiles and why use them?
-
-<video controls preload="none"><source type="video/mp4" src="videos/coding1.mp4"></video>
-
-::: {.notes}
-* Promised an example (`pip_demo`). Will show what can go wrong if you use pip on its own.
-* Start with a skeleton system with Python 3.10 installed and `ls -A` a venv created
-* `cat my_script.py` that performs simple hypothethis test using scipy
-* `cat requirements.txt` but can see this project was created a while ago, versions are old
-* `source .venv/bin/activate`
-* `pip install -r requirements.txt` (numpy 1.21.6, scipy 1.7.3)
-* `python my_script.py`
-* Now want to do some plotting `pip install matplotlib` (3.10.0) which upgrades numpy to 2.2.2 (note the warning)
-* Breaks `python my_script.py`
-* `nano requirements.txt` and add `matplotlib`
-* `pip install -r requirements.txt` works but needs to download multiple versions to find the right one (3.8.4)
-:::
-
-## What about the workflow with `uv`?
-
-<video controls preload="none"><source type="video/mp4" src="videos/coding2.mp4"></video>
-
-::: {.notes}
-* (`uv_demo`)
-* `ls -A` note no venv - python not even installed
-* <https://docs.astral.sh/uv/> and `curl -LsSf https://astral.sh/uv/install.sh | sh`
-* `uv init --python 3.10` and note `ls -A` the contents (can remove hello.py)
-* `uv run python -V` to verify version (**note** downloads python and creates venv)
-* `uv add numpy==1.21.6 scipy==1.7.3` (as before)
-* `uv run my_script.py` (**note** python is assumed and no need to activate)
-* `uv add matplotlib`
-* `uv run my_script.py` (works and uses 3.8.4, same as before)
-* What has happened?
-* `cat pyproject.toml` and `cat .python-version`
-* `cat uv.lock` another toml file with all the matching versions of the packages installed, plus hashes.
-* (version control all of these - automatically up-to-date)
-:::
-
-## Configuring `uv` using `pyproject.toml`
-
-<video controls preload="none"><source type="video/mp4" src="videos/coding3.mp4"></video>
-
-::: {.notes}
-* Can make changes to `pyproject.toml` and `.python-version` using a text editor or using `uv`. Shouldn't edit `uv.lock` by hand.
-* Showing this both ways
-* `uv python list`
-* `uv python pin 3.13` but this won't work as the packages are too old
-* `nano pyproject.toml` and change version constraints to `>=`
-* `uv sync --upgrade` to update all packages to latest versions possible, given the constraints
-* `uv run my_script.py`
-:::
-
-## Applying this in a data science context
-
-<video controls preload="none"><source type="video/mp4" src="videos/coding4.mp4"></video>
-
-::: {.notes}
-* (`uv_lib_demo`)
-* Switch to example for `uv init --lib` but have made some other changes
-* `tree` to show layout, come back to notebooks, `cat src/my_project/probability.py`
-* `cat pyproject.toml` including build system and project scripts
-* `uv run test-coin`
-* To look at notebooks `uv run --with jupyter jupyter lab` including importing and autoreloading
-:::
-
-## Other tips
-
-<video controls preload="none"><source type="video/mp4" src="videos/coding5.mp4"></video>
-
-::: {.notes}
-* Scripts with inline metadata (`PEP 723`)
-    * `cd ../uv_script_demo`
-    * `cat my_script.py`
-    * `uv run my_script.py`
-    * run again
-* Global tools - if you recall, like pipx
-    * `uvx ruff format my_script.py`
-    * `cat my_script.py` to show changes
-    * useful for running tools on PyPI without having to formally install them
-:::
-
-## Wrapping up
-
-* Find out more: :link: [docs.astral.sh/uv](https://docs.astral.sh/uv/) (and :link: [pixi.sh](https://pixi.sh/))
-
-* Use for **new projects**
-    * `uv` if PyPI (`pixi` if Conda)
-    * package in `src/`
-    * commands `uv run test-coin`
-
-* When working with someone<br>**new to Python**
-    * `uv run ...` could be in a script
-
-* **Don't** use `pip`/`conda` by themselves
-
-::: {.credits}
-![](assets/logo.svg){fig-alt="University of Bristol, Jean Golding Institute" width=9em}  
-James Thomas<br>
-j.thomas@bristol.ac.uk
-
-<small>DOI: [10.5281/zenodo.14837979](https://doi.org/10.5281/zenodo.14837979)</small>
-:::
-
-## Bonus material - `pixi`
-
-<video controls preload="none"><source type="video/mp4" src="videos/coding6.mp4"></video>
-
-::: {.notes}
-* (`pixi_demo`)
-* `cat pyproject.toml`
-* `cat pixi.lock`
-* `pixi run test-coin`
-* `pixi run format`
-* `pixi run lab`
-:::
+[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.en)
