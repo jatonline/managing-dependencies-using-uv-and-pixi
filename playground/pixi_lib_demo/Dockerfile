@@ -10,4 +10,4 @@ WORKDIR /home/ubuntu
 
 RUN curl -fsSL https://pixi.sh/install.sh | bash
 COPY --chown=ubuntu files/ /home/ubuntu/
-RUN cd /home/ubuntu/pixi_demo && /home/ubuntu/.pixi/bin/pixi install --all
+RUN cd /home/ubuntu/pixi_lib_demo && /home/ubuntu/.pixi/bin/pixi install --all

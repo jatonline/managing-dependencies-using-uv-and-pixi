@@ -10,7 +10,7 @@ services:
     ports:
       - "8888:8888"
 
-  pixi_demo:
-    build: pixi_demo
+  pixi_lib_demo:
+    build: pixi_lib_demo
     ports:
       - "8889:8889"
