@@ -85,9 +85,9 @@ and:
 * Advise check it out - remainder of this talk will focus on pixi, but concepts are similar.
 :::
 
-## What are lockfiles and why use them? {.center}
+## Why _properly_ managing dependencies<br>is important <small style="vertical-align:middle">(a motivating example using `conda`)</small> {.center}
 
-<!--<video controls preload="none"><source type="video/mp4" src="videos/coding1.mp4"></video>-->
+<video controls preload="none"><source type="video/mp4" src="videos/coding1.mp4"></video>
 
 ::: {.notes}
 * Promised an example (`conda_demo`). Will show why, when you use conda, you should be careful about keeping track of your dependencies.
@@ -116,7 +116,7 @@ and:
 
 ## Someone else updates the project<br><small>(and they're using another platform)</small> {.center}
 
-<!--<video controls preload="none"><source type="video/mp4" src="videos/coding2.mp4"></video>-->
+<video controls preload="none"><source type="video/mp4" src="videos/coding2.mp4"></video>
 
 ::: {.notes}
 * `cd ../conda_demo_updated_on_mac`
@@ -129,7 +129,7 @@ and:
 
 ## What about the workflow with `pixi`? {.center}
 
-<!--<video controls preload="none"><source type="video/mp4" src="videos/coding3.mp4"></video>-->
+<video controls preload="none"><source type="video/mp4" src="videos/coding3.mp4"></video>
 
 ::: {.notes}
 * (`pixi_demo`)
@@ -154,7 +154,7 @@ and:
 
 ## Making changes to the project<br><small>(adding new dependencies and new developers)</small> {.center}
 
-<!--<video controls preload="none"><source type="video/mp4" src="videos/coding4.mp4"></video>-->
+<video controls preload="none"><source type="video/mp4" src="videos/coding4.mp4"></video>
 
 ::: {.notes}
 * Now see what happens when want to add new dependency or a new developer
@@ -172,7 +172,7 @@ and:
 
 ## Applying this in a data science context {.center}
 
-<!--<video controls preload="none"><source type="video/mp4" src="videos/coding5.mp4"></video>-->
+<video controls preload="none"><source type="video/mp4" src="videos/coding5.mp4"></video>
 
 ::: {.notes}
 * (`pixi_lib_demo`)
@@ -191,7 +191,7 @@ and:
 
 ## Other tips {.center}
 
-<!--<video controls preload="none"><source type="video/mp4" src="videos/coding6.mp4"></video>-->
+<video controls preload="none"><source type="video/mp4" src="videos/coding6.mp4"></video>
 
 ::: {.notes}
 * Global tools

@@ -70,7 +70,7 @@ and:
 * Advise check it out - remainder of this talk will focus on uv, but concepts are similar.
 :::
 
-## What are lockfiles and why use them?
+## Why _properly_ managing dependencies<br>is important <small style="vertical-align:middle">(a motivating example using `pip`)</small> {.center}
 
 <video controls preload="none"><source type="video/mp4" src="videos/coding1.mp4"></video>
 
