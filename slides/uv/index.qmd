@@ -1,5 +1,5 @@
 ---
-title: Can others<br>reproduce your results? <small>Using 'uv' in a<br>Python data analysis project</small>
+title: Can others reproduce<br>your results?<br><small>Using `uv` to manage dependencies<br>in a Python data analysis project</small>
 author: James Thomas <br> j.thomas@bristol.ac.uk
 date: 2025-04-01
 ---
@@ -70,7 +70,7 @@ and:
 * Advise check it out - remainder of this talk will focus on uv, but concepts are similar.
 :::
 
-## What are lockfiles and why use them?
+## Why _properly_ managing dependencies<br>is important <small style="vertical-align:middle">(a motivating example using `pip`)</small> {.center}
 
 <video controls preload="none"><source type="video/mp4" src="videos/coding1.mp4"></video>
 
@@ -166,7 +166,7 @@ and:
 * **Don't** use `pip`/`conda` by themselves
 
 ::: {.credits}
-![](assets/logo.svg){fig-alt="University of Bristol, Jean Golding Institute" width=9em}  
+![](../../assets/logo.svg){fig-alt="University of Bristol, Jean Golding Institute" width=9em}<br>
 James Thomas<br>
 j.thomas@bristol.ac.uk
 

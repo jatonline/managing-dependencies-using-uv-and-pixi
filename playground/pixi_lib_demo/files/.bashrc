@@ -2,7 +2,7 @@
 
 PS1='\e[0;34m\W$ \e[m'
 alias cat='batcat --wrap never --theme GitHub'
-alias tree='tree -C --filesfirst'
+alias tree='tree -C --filesfirst -I __pycache__'
 
 export PATH=$PATH:$HOME/.pixi/bin
 eval "$(pixi completion --shell bash)"
