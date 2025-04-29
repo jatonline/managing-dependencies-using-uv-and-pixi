@@ -1,0 +1,30 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Can others reproduce your results?Using uv and pixi in Python data analysis projects",
+    "section": "",
+    "text": "Choose the tool you’d like to know more about:\n\n\n\nSlides (1 April 2025, with embedded videos)\nVideo of the Lunch and Learn talk (1 April 2025)\nVideo of the RSE South West talk (10 February 2025) \nExample data science project layout\n\npyproject.toml\nnotebooks/\n\nexample_notebook.ipynb\n\nsrc/my_project/\n\nprobability.py\n\n\nFurther reading:\n\nuv project website\n\n\n\n\n\n\nSlides (29 April 2025, with embedded videos)\nExample data science project layout\n\npyproject.toml\nnotebooks/\n\nexample_notebook.ipynb\n\nsrc/my_project/\n\nprobability.py\n\n\nFurther reading:\n\nPixi project website"
+  },
+  {
+    "objectID": "index.html#viewing-the-resources",
+    "href": "index.html#viewing-the-resources",
+    "title": "Can others reproduce your results?Using uv and pixi in Python data analysis projects",
+    "section": "",
+    "text": "Choose the tool you’d like to know more about:\n\n\n\nSlides (1 April 2025, with embedded videos)\nVideo of the Lunch and Learn talk (1 April 2025)\nVideo of the RSE South West talk (10 February 2025) \nExample data science project layout\n\npyproject.toml\nnotebooks/\n\nexample_notebook.ipynb\n\nsrc/my_project/\n\nprobability.py\n\n\nFurther reading:\n\nuv project website\n\n\n\n\n\n\nSlides (29 April 2025, with embedded videos)\nExample data science project layout\n\npyproject.toml\nnotebooks/\n\nexample_notebook.ipynb\n\nsrc/my_project/\n\nprobability.py\n\n\nFurther reading:\n\nPixi project website"
+  },
+  {
+    "objectID": "index.html#development",
+    "href": "index.html#development",
+    "title": "Can others reproduce your results?Using uv and pixi in Python data analysis projects",
+    "section": "Development",
+    "text": "Development\nSee the GitHub repo."
+  },
+  {
+    "objectID": "index.html#licence",
+    "href": "index.html#licence",
+    "title": "Can others reproduce your results?Using uv and pixi in Python data analysis projects",
+    "section": "Licence",
+    "text": "Licence\nCC BY 4.0"
+  }
+]
