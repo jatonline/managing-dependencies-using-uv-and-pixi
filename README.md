@@ -2,7 +2,7 @@
 
 ## Viewing the resources
 
-[Visit the website](https://jatonline.github.io/managing-dependencies-using-uv-and-pixi/)
+👉 [Visit the website](https://jatonline.github.io/managing-dependencies-using-uv-and-pixi/) 👈
 
 ## Development
 
