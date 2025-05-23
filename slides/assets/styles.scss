@@ -6,7 +6,12 @@
     --r-heading-line-height: 1;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     line-height: 0.9;
 
     code {
@@ -20,19 +25,25 @@ ul {
 }
 
 .old {
-    &, * {
+
+    &,
+    * {
         color: #aaa !important;
     }
 }
 
 .new {
-    &, * {
+
+    &,
+    * {
         color: var(--r-heading-color) !important;
     }
 }
 
 .current {
-    &, * {
+
+    &,
+    * {
         color: var(--r-main-color) !important;
     }
 }

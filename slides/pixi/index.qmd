@@ -215,7 +215,7 @@ and:
 * **Easier** than `conda`/`pip` by themselves
 
 ::: {.credits}
-![](../../assets/logo.svg){fig-alt="University of Bristol, Jean Golding Institute" width=9em}<br>
+![](../assets/logo.svg){fig-alt="University of Bristol, Jean Golding Institute" width=9em}<br>
 James Thomas<br>
 j.thomas@bristol.ac.uk
 
