@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Can others reproduce your results?Using uv and pixi in Python data analysis projects",
     "section": "",
-    "text": "Reproducible programming environments are crucial for ensuring consistent and reliable software development. They enable developers to recreate exact configurations, facilitating collaboration and long-term maintenance of projects.\nThese videos demonstrate of uv and pixi - environment management tools for Python, for PyPI and conda packages (respectively). They show how as a data scientist, research software engineer or scientific coder, you might take practical steps to incorporate them into your project."
+    "text": "Reproducible programming environments are crucial for ensuring consistent and reliable software development. They enable developers to recreate exact configurations, facilitating collaboration and long-term maintenance of projects.\nThese videos demonstrate uv and pixi - environment management tools for Python, for PyPI and conda packages (respectively). They show how as a data scientist, research software engineer or scientific coder, you might take practical steps to incorporate them into your project."
   },
   {
     "objectID": "index.html#viewing-the-resources",
