@@ -4,14 +4,14 @@
     "href": "index.html",
     "title": "Can others reproduce your results?Using uv and pixi in Python data analysis projects",
     "section": "",
-    "text": "Choose the tool you’d like to know more about:\n\n\n\n📄 Slides (1 April 2025, with embedded videos)\n▶️ Video of the Lunch and Learn talk (1 April 2025)\nAnother video of the RSE South West talk (10 February 2025) \n🧑‍💻 Example data science project layout\n\npyproject.toml\nnotebooks/\n\nexample_notebook.ipynb\n\nsrc/my_project/\n\nprobability.py\n\n\nFurther reading:\n\nuv project website\n\n\n\n\n\n\n📄 Slides (29 April 2025, with embedded videos)\n▶️ Video of the Lunch and Learn talk (29 April 2025)\n🧑‍💻 Example data science project layout\n\npyproject.toml\nnotebooks/\n\nexample_notebook.ipynb\n\nsrc/my_project/\n\nprobability.py\n\n\nFurther reading:\n\nPixi project website"
+    "text": "Reproducible programming environments are crucial for ensuring consistent and reliable software development. They enable developers to recreate exact configurations, facilitating collaboration and long-term maintenance of projects.\nThese videos demonstrate of uv and pixi - environment management tools for Python, for PyPI and conda packages (respectively). They show how as a data scientist, research software engineer or scientific coder, you might take practical steps to incorporate them into your project."
   },
   {
     "objectID": "index.html#viewing-the-resources",
     "href": "index.html#viewing-the-resources",
     "title": "Can others reproduce your results?Using uv and pixi in Python data analysis projects",
-    "section": "",
-    "text": "Choose the tool you’d like to know more about:\n\n\n\n📄 Slides (1 April 2025, with embedded videos)\n▶️ Video of the Lunch and Learn talk (1 April 2025)\nAnother video of the RSE South West talk (10 February 2025) \n🧑‍💻 Example data science project layout\n\npyproject.toml\nnotebooks/\n\nexample_notebook.ipynb\n\nsrc/my_project/\n\nprobability.py\n\n\nFurther reading:\n\nuv project website\n\n\n\n\n\n\n📄 Slides (29 April 2025, with embedded videos)\n▶️ Video of the Lunch and Learn talk (29 April 2025)\n🧑‍💻 Example data science project layout\n\npyproject.toml\nnotebooks/\n\nexample_notebook.ipynb\n\nsrc/my_project/\n\nprobability.py\n\n\nFurther reading:\n\nPixi project website"
+    "section": "Viewing the resources",
+    "text": "Viewing the resources\nChoose the tool you’d like to know more about:\n\n\nuv\n   1 April 2025\n📄 Slides (with embedded videos)\n🧑‍💻 Example data science project layout\n\npyproject.toml\nnotebooks/\n\nexample_notebook.ipynb\n\nsrc/my_project/\n\nprobability.py\n\n\n📚 Further reading:\n\nuv project website\nAnother video from RSE South West (10 February 2025)\n\n\n\n\npixi\n   29 April 2025\n📄 Slides (with embedded videos)\n🧑‍💻 Example data science project layout\n\npyproject.toml\nnotebooks/\n\nexample_notebook.ipynb\n\nsrc/my_project/\n\nprobability.py\n\n\n📚 Further reading:\n\nPixi project website"
   },
   {
     "objectID": "index.html#development",
