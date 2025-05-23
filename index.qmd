@@ -3,36 +3,70 @@ title: Can others reproduce your results?<br><small>Using `uv` and `pixi` in Pyt
 author: James Thomas <br> j.thomas@bristol.ac.uk
 ---
 
+Reproducible programming environments are crucial for ensuring consistent and reliable software development.
+They enable developers to recreate exact configurations, facilitating collaboration and long-term maintenance of projects.
+
+These videos demonstrate `uv` and `pixi` - environment management tools for Python, for PyPI and conda packages (respectively).
+They show how as a data scientist, research software engineer or scientific coder, you might take practical steps to incorporate them into your project.
+
 ## Viewing the resources
 
 Choose the tool you'd like to know more about:
 
+:::: {.video-links}
+::: {}
+
 ### uv
 
-- 📄 [Slides](./slides/uv/) (<time datetime="2025-04-01">1 April 2025</time>, with embedded videos)
-- ▶️ [Video of the Lunch and Learn talk](https://youtu.be/OJ_-rkoeol8) (<time datetime="2025-04-01">1 April 2025</time>)
-- Another [video of the RSE South West talk](https://zenodo.org/records/14837979) (<time datetime="2025-02-10">10 February 2025</time>) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14837979.svg)](https://doi.org/10.5281/zenodo.14837979)
-- 🧑‍💻 [Example data science project layout](https://github.com/jatonline/managing-dependencies-using-uv-and-pixi/blob/main/playground/uv_lib_demo/files/uv_lib_demo/)
-    - [`pyproject.toml`](https://github.com/jatonline/managing-dependencies-using-uv-and-pixi/blob/main/playground/uv_lib_demo/files/uv_lib_demo/pyproject.toml)
-    - `notebooks/`
-        - [`example_notebook.ipynb`](https://github.com/jatonline/managing-dependencies-using-uv-and-pixi/blob/main/playground/uv_lib_demo/files/uv_lib_demo/notebooks/example_notebook.ipynb)
-    - `src/my_project/`
-        - [`probability.py`](https://github.com/jatonline/managing-dependencies-using-uv-and-pixi/blob/main/playground/uv_lib_demo/files/uv_lib_demo/src/my_project/probability.py)
-- Further reading:
-    - [uv project website](https://docs.astral.sh/uv/)
+<a class="video" href="https://youtu.be/OJ_-rkoeol8">
+    <img src="https://i.ytimg.com/vi/OJ_-rkoeol8/hqdefault.jpg" alt="Play the video of the talk">
+</a>
+<time datetime="2025-04-29">1 April 2025</time>
 
-### Pixi
+📄 [Slides](./slides/uv/) (with embedded videos)
 
-- 📄 [Slides](./slides/pixi/) (<time datetime="2025-04-29">29 April 2025</time>, with embedded videos)
-- ▶️ [Video of the Lunch and Learn talk](https://youtu.be/ws92c5NFPaU) (<time datetime="2025-04-29">29 April 2025</time>)
-- 🧑‍💻 [Example data science project layout](https://github.com/jatonline/managing-dependencies-using-uv-and-pixi/blob/main/playground/pixi_lib_demo/files/pixi_lib_demo/)
-    - [`pyproject.toml`](https://github.com/jatonline/managing-dependencies-using-uv-and-pixi/blob/main/playground/pixi_lib_demo/files/pixi_lib_demo/pyproject.toml)
-    - `notebooks/`
-        - [`example_notebook.ipynb`](https://github.com/jatonline/managing-dependencies-using-uv-and-pixi/blob/main/playground/pixi_lib_demo/files/pixi_lib_demo/notebooks/example_notebook.ipynb)
-    - `src/my_project/`
-        - [`probability.py`](https://github.com/jatonline/managing-dependencies-using-uv-and-pixi/blob/main/playground/pixi_lib_demo/files/pixi_lib_demo/src/my_project/probability.py)
-- Further reading:
-    - [Pixi project website](https://pixi.sh)
+🧑‍💻 [Example data science project layout](https://github.com/jatonline/managing-dependencies-using-uv-and-pixi/blob/main/playground/uv_lib_demo/files/uv_lib_demo/)
+
+- [`pyproject.toml`](https://github.com/jatonline/managing-dependencies-using-uv-and-pixi/blob/main/playground/uv_lib_demo/files/uv_lib_demo/pyproject.toml)
+- `notebooks/`
+    - [`example_notebook.ipynb`](https://github.com/jatonline/managing-dependencies-using-uv-and-pixi/blob/main/playground/uv_lib_demo/files/uv_lib_demo/notebooks/example_notebook.ipynb)
+- `src/my_project/`
+    - [`probability.py`](https://github.com/jatonline/managing-dependencies-using-uv-and-pixi/blob/main/playground/uv_lib_demo/files/uv_lib_demo/src/my_project/probability.py)
+
+📚 Further reading:
+
+- [uv project website](https://docs.astral.sh/uv/)
+- [Another video](https://zenodo.org/records/14837979) from RSE South West (<time datetime="2025-02-10">10 February 2025</time>)  
+  [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14837979.svg)](https://doi.org/10.5281/zenodo.14837979)
+
+
+:::
+
+::: {}
+
+### pixi
+
+<a class="video" href="https://youtu.be/ws92c5NFPaU">
+    <img src="https://i.ytimg.com/vi/ws92c5NFPaU/hqdefault.jpg" alt="Play the video of the talk">
+</a>
+<time datetime="2025-04-29">29 April 2025</time>
+
+📄 [Slides](./slides/pixi/) (with embedded videos)
+
+🧑‍💻 [Example data science project layout](https://github.com/jatonline/managing-dependencies-using-uv-and-pixi/blob/main/playground/pixi_lib_demo/files/pixi_lib_demo/)
+
+- [`pyproject.toml`](https://github.com/jatonline/managing-dependencies-using-uv-and-pixi/blob/main/playground/pixi_lib_demo/files/pixi_lib_demo/pyproject.toml)
+- `notebooks/`
+    - [`example_notebook.ipynb`](https://github.com/jatonline/managing-dependencies-using-uv-and-pixi/blob/main/playground/pixi_lib_demo/files/pixi_lib_demo/notebooks/example_notebook.ipynb)
+- `src/my_project/`
+    - [`probability.py`](https://github.com/jatonline/managing-dependencies-using-uv-and-pixi/blob/main/playground/pixi_lib_demo/files/pixi_lib_demo/src/my_project/probability.py)
+
+📚 Further reading:
+
+- [Pixi project website](https://pixi.sh)
+
+:::
+::::
 
 ## Development
 
@@ -41,3 +75,46 @@ See the [GitHub repo](https://github.com/jatonline/managing-dependencies-using-u
 ## Licence
 
 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.en)
+
+<style>
+.video-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: -1rem;
+
+    a.video {
+        display: block;
+        position: relative;
+        text-align: center;
+
+        img {
+            aspect-ratio: 16/9;
+            width: 100%;
+            object-fit: cover;
+            border: 2px solid #000;
+        }
+
+        &::after {
+            content: "\25B6\FE0E";  /* Unicode character for a triangle, non-emoji */
+            font-size: 2rem;
+            line-height: 2;
+            color: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;  /* So clicks go through to the link */
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+            background: #f00;
+            border-radius: 10px;
+            width: 4rem;
+            text-align: center;
+        }
+
+        &:hover::after {
+            background: #d00;
+        }
+    }
+}
+</style>
