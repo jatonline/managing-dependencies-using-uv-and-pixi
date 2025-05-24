@@ -186,7 +186,7 @@ ul.task-list li input[type="checkbox"] {
         }
 
         &::after {
-            content: "\25B6";  /* Unicode character for a play triangle */
+            content: "\25B6\FE0E";  /* Unicode character for a play triangle */
             font-size: 2rem;
             color: white;
             position: absolute;
@@ -199,6 +199,7 @@ ul.task-list li input[type="checkbox"] {
             border-radius: 10px;
             width: 4rem;
             text-align: center;
+            line-height: 2;
         }
 
         &:hover::after {
