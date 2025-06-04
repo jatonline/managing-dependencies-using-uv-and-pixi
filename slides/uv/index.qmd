@@ -1,7 +1,7 @@
 ---
 title: Can others reproduce<br>your results?<br><small>Using `uv` to manage dependencies<br>in a Python data analysis project</small>
 author: James Thomas <br> j.thomas@bristol.ac.uk
-date: 2025-04-01
+date: 2025-06-05
 ---
 
 ## Outline
@@ -128,7 +128,7 @@ and:
 
 ::: {.notes}
 * (`uv_lib_demo`)
-* Switch to example for `uv init --lib` but have made some other changes
+* Switch to example for `uv init --package` but have made some other changes
 * `tree` to show layout, come back to notebooks, `cat src/my_project/probability.py`
 * `cat pyproject.toml` including build system and project scripts
 * `uv run test-coin`
@@ -170,7 +170,7 @@ and:
 James Thomas<br>
 j.thomas@bristol.ac.uk
 
-<small>DOI: [10.5281/zenodo.14837979](https://doi.org/10.5281/zenodo.14837979)</small>
+<small>[jatonline.github.io/managing-<br>dependencies-using-uv-and-pixi](https://jatonline.github.io/managing-dependencies-using-uv-and-pixi/)</small>
 :::
 
 ## Bonus material - `pixi`

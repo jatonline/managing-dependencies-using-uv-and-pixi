@@ -1,7 +1,7 @@
 ---
 title: Can others reproduce<br>your `conda` results?<br><small>Using `pixi` to manage dependencies<br>in a Python data analysis project</small>
 author: James Thomas <br> j.thomas@bristol.ac.uk
-date: 2025-04-29
+date: 2025-06-05
 ---
 
 ## Outline
@@ -219,5 +219,5 @@ and:
 James Thomas<br>
 j.thomas@bristol.ac.uk
 
-<small>DOI: [10.5281/zenodo.15287034](https://doi.org/10.5281/zenodo.15287034)</small>
+<small>[jatonline.github.io/managing-<br>dependencies-using-uv-and-pixi](https://jatonline.github.io/managing-dependencies-using-uv-and-pixi/)</small>
 :::

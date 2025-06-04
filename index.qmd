@@ -6,82 +6,194 @@ author: James Thomas <br> j.thomas@bristol.ac.uk
 Reproducible programming environments are crucial for ensuring consistent and reliable software development.
 They enable developers to recreate exact configurations, facilitating collaboration and long-term maintenance of projects.
 
-These videos demonstrate `uv` and `pixi` - environment management tools for Python, for PyPI and conda packages (respectively).
+These talks demonstrate `uv` and `pixi` - environment management tools for Python, for PyPI and conda packages (respectively).
 They show how as a data scientist, research software engineer or scientific coder, you might take practical steps to incorporate them into your project.
 
 ## Viewing the resources
 
 Choose the tool you'd like to know more about:
 
-:::: {.video-links}
-::: {}
+:::: {.panel-tabset group="tool"}
 
+## uv
 ### uv
 
 <a class="video" href="https://youtu.be/OJ_-rkoeol8">
-    <img src="https://i.ytimg.com/vi/OJ_-rkoeol8/hqdefault.jpg" alt="Play the video of the talk">
+    <img src="https://i.ytimg.com/vi/OJ_-rkoeol8/maxresdefault.jpg" alt="Play the video of the talk">
 </a>
 <time datetime="2025-04-29">1 April 2025</time>
 
-📄 [Slides](./slides/uv/) (with embedded videos)
+#### <span aria-hidden="true">📄</span> [Slides](./slides/uv/) (with embedded videos)
 
-🧑‍💻 [Example data science project layout](https://github.com/jatonline/managing-dependencies-using-uv-and-pixi/blob/main/playground/uv_lib_demo/files/uv_lib_demo/)
+#### <span aria-hidden="true">💡</span> Summary
 
+- `uv` automates the creation of **virtual environments** and the installation of specific versions of **Python and PyPI (pip) packages** inside them.
+- It manages a **lockfile** for you, that ensures the exact same versions of all your dependencies can be installed on a fresh system.
+  This is especially useful if you're collaborating with others.
+  Unlike `pip`, it ensures all your dependencies are compatible with each other.
+- It helps you follow best-practices, such as creating **projects with an importable package** (for shared library functions),
+  and defining **project scripts**.
+- It allows you to create **isolated scripts** which define their dependencies in a special comment at the top of the file.
+- It allows you to use and **install system-wide tools** (such as the formatter, Ruff).
+
+#### <span aria-hidden="true">💻</span> Key commands
+
+First, [install `uv`](https://docs.astral.sh/uv/#installation), restart your terminal, and run:
+
+`uv init`
+: [create a project](https://docs.astral.sh/uv/guides/projects/)
+
+`uv init --package`
+: create a project [_with an importable package_](https://docs.astral.sh/uv/concepts/projects/init/#packaged-applications) (for shared library functions)
+
+`uv add pandas`
+: [install packages](https://docs.astral.sh/uv/reference/cli/#uv-add)
+
+`uv run my_script.py`
+: run a Python script in the environment (`python` is not required)
+
+`uv run jupyter lab`
+: run an installed program in the environment (such as JupyterLab)
+
+`uv run my_task`
+: run a [project script](https://docs.astral.sh/uv/concepts/projects/config/#entry-points) (defined in `pyproject.toml`)
+
+`uv tree`
+: see [installed packages and dependencies](https://docs.astral.sh/uv/reference/cli/#uv-tree)
+
+`uv init --script my_isolated_script.py`
+: create a [script that will run in an isolated environment](https://docs.astral.sh/uv/guides/scripts/#creating-a-python-script)
+
+`uv tool install ruff`
+: install a [tool that can be used system-wide](https://docs.astral.sh/uv/guides/tools/#installing-tools) (such as the formatter, Ruff)
+
+`uvx ruff`
+: similar to above, but don't formally install the tool, [just download and run it](https://docs.astral.sh/uv/guides/tools/#running-tools)
+
+#### <span aria-hidden="true">💾</span> Files to version control
+
+`pyproject.toml`
+: [project settings](https://docs.astral.sh/uv/concepts/projects/layout/#the-pyprojecttoml)
+
+`uv.lock`
+: [lockfile](https://docs.astral.sh/uv/concepts/projects/layout/#the-lockfile) (do not edit by hand)
+
+#### <span aria-hidden="true">🧑‍💻</span> [Example data science project layout](https://github.com/jatonline/managing-dependencies-using-uv-and-pixi/blob/main/playground/uv_lib_demo/files/uv_lib_demo/)
+
+::: {.project-layout}
 - [`pyproject.toml`](https://github.com/jatonline/managing-dependencies-using-uv-and-pixi/blob/main/playground/uv_lib_demo/files/uv_lib_demo/pyproject.toml)
 - `notebooks/`
     - [`example_notebook.ipynb`](https://github.com/jatonline/managing-dependencies-using-uv-and-pixi/blob/main/playground/uv_lib_demo/files/uv_lib_demo/notebooks/example_notebook.ipynb)
 - `src/my_project/`
     - [`probability.py`](https://github.com/jatonline/managing-dependencies-using-uv-and-pixi/blob/main/playground/uv_lib_demo/files/uv_lib_demo/src/my_project/probability.py)
-
-📚 Further reading:
-
-- [uv project website](https://docs.astral.sh/uv/)
-- [Another video](https://zenodo.org/records/14837979) from RSE South West (<time datetime="2025-02-10">10 February 2025</time>)  
-  [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14837979.svg)](https://doi.org/10.5281/zenodo.14837979)
-
-
 :::
 
-::: {}
+#### <span aria-hidden="true">📚</span> Further reading
 
+- [uv project website](https://docs.astral.sh/uv/)
+- [`uv` CLI reference](https://docs.astral.sh/uv/reference/cli/)
+- [`pyproject.toml` reference](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/)
+- [Another video](https://zenodo.org/records/14837979) from RSE South West (<time datetime="2025-02-10">10 February 2025</time>)
+  [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14837979.svg)](https://doi.org/10.5281/zenodo.14837979)
+
+## pixi
 ### pixi
 
 <a class="video" href="https://youtu.be/ws92c5NFPaU">
-    <img src="https://i.ytimg.com/vi/ws92c5NFPaU/hqdefault.jpg" alt="Play the video of the talk">
+    <img src="https://i.ytimg.com/vi/ws92c5NFPaU/maxresdefault.jpg" alt="Play the video of the talk">
 </a>
 <time datetime="2025-04-29">29 April 2025</time>
 
-📄 [Slides](./slides/pixi/) (with embedded videos)
+#### <span aria-hidden="true">📄</span> [Slides](./slides/pixi/) (with embedded videos)
 
-🧑‍💻 [Example data science project layout](https://github.com/jatonline/managing-dependencies-using-uv-and-pixi/blob/main/playground/pixi_lib_demo/files/pixi_lib_demo/)
+#### <span aria-hidden="true">💡</span> Summary
 
+- `pixi` automates the creation of **conda environments** and the installation of specific versions of **Python, conda and PyPI (pip) packages** inside them.
+- It manages a **lockfile** for you, that ensures the exact same versions of all your dependencies can be installed on a fresh system.
+  This is especially useful if you're collaborating with others.
+  Unlike `conda`, it can work with collaborators using different platforms.
+  Unlike `pip`, it ensures all your dependencies are compatible with each other.
+- It helps you follow best-practices, such as creating **projects (or workspaces) with an importable package** (for shared library functions),
+  and defining **project tasks**.
+- It allows you to use and **install system-wide tools** (such as the formatter, Ruff).
+
+#### <span aria-hidden="true">💻</span> Key commands
+
+First, [install `pixi`](https://pixi.sh/latest/installation/), restart your terminal, and run:
+
+`pixi init`
+: [create a project (or workspace)](https://pixi.sh/latest/reference/cli/pixi/init/), using `pixi.toml` as the project configuration file.
+
+`pixi init --format pyproject`
+: create a project _with an importable package_ (for shared library functions),
+  [using `pyproject.toml`](https://pixi.sh/latest/python/pyproject_toml/) as the project configuration file.
+
+`pixi add pandas`
+: [install packages](https://pixi.sh/latest/reference/cli/pixi/add/)
+
+`pixi run python my_script.py`
+: run a Python script in the environment
+
+`pixi run jupyter lab`
+: run an installed program in the environment (such as JupyterLab)
+
+`pixi run my_task`
+: run a [project task](https://pixi.sh/latest/workspace/advanced_tasks/) (defined in `pixi.toml`/`pyproject.toml`)
+
+`pixi tree`
+: see [installed packages and dependencies](https://pixi.sh/latest/reference/cli/pixi/tree/)
+
+`pixi workspace platform add linux-64 osx-arm64 win-64`
+: configure the project to [support multiple platforms](https://pixi.sh/latest/workspace/multi_platform_configuration/) that other developers may be using
+
+`pixi global install ruff`
+: install a [tool that can be used system-wide](https://pixi.sh/latest/global_tools/introduction/) (such as the formatter, Ruff)
+
+`pixi exec ruff`
+: similar to above, but don't formally install the tool, just [download and run it](https://pixi.sh/latest/reference/cli/pixi/exec/)
+
+#### <span aria-hidden="true">💾</span> Files to version control
+
+`pixi.toml`/`pyproject.toml`
+: [project (or workspace) settings](https://pixi.sh/latest/reference/pixi_manifest/)
+
+`pixi.lock`
+: [lockfile](https://pixi.sh/latest/workspace/lockfile/) (do not edit by hand)
+
+#### <span aria-hidden="true">🧑‍💻</span> [Example data science project layout](https://github.com/jatonline/managing-dependencies-using-uv-and-pixi/blob/main/playground/pixi_lib_demo/files/pixi_lib_demo/)
+
+::: {.project-layout}
 - [`pyproject.toml`](https://github.com/jatonline/managing-dependencies-using-uv-and-pixi/blob/main/playground/pixi_lib_demo/files/pixi_lib_demo/pyproject.toml)
 - `notebooks/`
     - [`example_notebook.ipynb`](https://github.com/jatonline/managing-dependencies-using-uv-and-pixi/blob/main/playground/pixi_lib_demo/files/pixi_lib_demo/notebooks/example_notebook.ipynb)
 - `src/my_project/`
     - [`probability.py`](https://github.com/jatonline/managing-dependencies-using-uv-and-pixi/blob/main/playground/pixi_lib_demo/files/pixi_lib_demo/src/my_project/probability.py)
+:::
 
-📚 Further reading:
+#### <span aria-hidden="true">📚</span> Further reading
 
 - [Pixi project website](https://pixi.sh)
+- [`pixi` CLI reference](https://pixi.sh/latest/reference/cli/pixi/)
+- [`pixi.toml`/`pyproject.toml` reference](https://pixi.sh/latest/reference/pixi_manifest/)
 
-:::
 ::::
 
 ## Development
 
-See the [GitHub repo](https://github.com/jatonline/managing-dependencies-using-uv-and-pixi/blob/main/README.md#development).
+For information on changing these slides or running the live demos, see the [GitHub repo](https://github.com/jatonline/managing-dependencies-using-uv-and-pixi/blob/main/README.md#development).
 
 ## Licence
 
 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.en)
 
 <style>
-.video-links {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-top: -1rem;
+    .nav-tabs .nav-link {
+        color: #be2b31 !important;
+
+        &.active {
+            font-weight: bold;
+        }
+    }
 
     a.video {
         display: block;
@@ -116,5 +228,27 @@ See the [GitHub repo](https://github.com/jatonline/managing-dependencies-using-u
             background: #d00;
         }
     }
-}
+
+    h4:has(span[aria-hidden=true]) {
+        text-indent: -1.6em;
+        padding-left: 1.6em;
+    }
+
+    dl {
+        padding-left: 2rem;
+
+        dt {
+            text-indent: -1rem;
+
+            code {
+                color: #be2b31;
+                font-weight: inherit;
+                text-wrap: auto;
+            }
+        }
+    }
+
+    .project-layout ul {
+        list-style: symbols(cyclic "╰");
+    }
 </style>

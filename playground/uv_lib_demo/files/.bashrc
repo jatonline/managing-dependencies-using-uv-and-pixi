@@ -8,5 +8,5 @@ alias tree='tree -C --filesfirst'
 
 cd uv_lib_demo
 clear
-echo "Project was started with: uv init --lib"
+echo "Project was started with: uv init --package"
 echo
