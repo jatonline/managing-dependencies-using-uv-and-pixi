@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.30">
+<meta name="generator" content="quarto-1.7.31">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -36,10 +36,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-de070a7b0ab54f8780927367ac907214.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-0d5e872819c6436bdcf2a57d447defe0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-784e8e74e7ccf96bd114305a2643b3ca.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -129,8 +129,22 @@ ul.task-list li input[type="checkbox"] {
 <li>It manages a <strong>lockfile</strong> for you, that ensures the exact same versions of all your dependencies can be installed on a fresh system. This is especially useful if you’re collaborating with others. Unlike <code>pip</code>, it ensures all your dependencies are compatible with each other.</li>
 <li>It helps you follow best-practices, such as creating <strong>projects with an importable package</strong> (for shared library functions), and defining <strong>project scripts</strong>.</li>
 <li>It allows you to create <strong>isolated scripts</strong> which define their dependencies in a special comment at the top of the file.</li>
+<li>It allows you to use <strong>temporarily add additional packages</strong> to environment (such as JupyterLab) to a disposeable environment.</li>
 <li>It allows you to use and <strong>install system-wide tools</strong> (such as the formatter, Ruff).</li>
 </ul>
+</section>
+<section id="files-to-version-control" class="level4">
+<h4 class="anchored" data-anchor-id="files-to-version-control"><span aria-hidden="true">💾</span> Files to version control</h4>
+<dl>
+<dt><code>pyproject.toml</code></dt>
+<dd>
+<a href="https://docs.astral.sh/uv/concepts/projects/layout/#the-pyprojecttoml">project settings</a>
+</dd>
+<dt><code>uv.lock</code></dt>
+<dd>
+<a href="https://docs.astral.sh/uv/concepts/projects/layout/#the-lockfile">lockfile</a> (do not edit by hand)
+</dd>
+</dl>
 </section>
 <section id="key-commands" class="level4">
 <h4 class="anchored" data-anchor-id="key-commands"><span aria-hidden="true">💻</span> Key commands</h4>
@@ -144,6 +158,10 @@ ul.task-list li input[type="checkbox"] {
 <dd>
 create a project <a href="https://docs.astral.sh/uv/concepts/projects/init/#packaged-applications"><em>with an importable package</em></a> (for shared library functions)
 </dd>
+<dt><code>uv init --script my_isolated_script.py</code></dt>
+<dd>
+create a <a href="https://docs.astral.sh/uv/guides/scripts/#creating-a-python-script">script that will run in an isolated environment</a>
+</dd>
 <dt><code>uv add pandas</code></dt>
 <dd>
 <a href="https://docs.astral.sh/uv/reference/cli/#uv-add">install packages</a>
@@ -154,7 +172,11 @@ run a Python script in the environment (<code>python</code> is not required)
 </dd>
 <dt><code>uv run jupyter lab</code></dt>
 <dd>
-run an installed program in the environment (such as JupyterLab)
+run an already-installed program in the environment (such as JupyterLab)
+</dd>
+<dt><code>uv run --with jupyter jupyter lab</code></dt>
+<dd>
+temporarily add a package (that is not installed) to an environment and run a command from it (such as JupyterLab)
 </dd>
 <dt><code>uv run my_task</code></dt>
 <dd>
@@ -164,10 +186,6 @@ run a <a href="https://docs.astral.sh/uv/concepts/projects/config/#entry-points"
 <dd>
 see <a href="https://docs.astral.sh/uv/reference/cli/#uv-tree">installed packages and dependencies</a>
 </dd>
-<dt><code>uv init --script my_isolated_script.py</code></dt>
-<dd>
-create a <a href="https://docs.astral.sh/uv/guides/scripts/#creating-a-python-script">script that will run in an isolated environment</a>
-</dd>
 <dt><code>uv tool install ruff</code></dt>
 <dd>
 install a <a href="https://docs.astral.sh/uv/guides/tools/#installing-tools">tool that can be used system-wide</a> (such as the formatter, Ruff)
@@ -175,19 +193,6 @@ install a <a href="https://docs.astral.sh/uv/guides/tools/#installing-tools">too
 <dt><code>uvx ruff</code></dt>
 <dd>
 similar to above, but don’t formally install the tool, <a href="https://docs.astral.sh/uv/guides/tools/#running-tools">just download and run it</a>
-</dd>
-</dl>
-</section>
-<section id="files-to-version-control" class="level4">
-<h4 class="anchored" data-anchor-id="files-to-version-control"><span aria-hidden="true">💾</span> Files to version control</h4>
-<dl>
-<dt><code>pyproject.toml</code></dt>
-<dd>
-<a href="https://docs.astral.sh/uv/concepts/projects/layout/#the-pyprojecttoml">project settings</a>
-</dd>
-<dt><code>uv.lock</code></dt>
-<dd>
-<a href="https://docs.astral.sh/uv/concepts/projects/layout/#the-lockfile">lockfile</a> (do not edit by hand)
 </dd>
 </dl>
 </section>
@@ -234,6 +239,19 @@ similar to above, but don’t formally install the tool, <a href="https://docs.a
 <li>It allows you to use and <strong>install system-wide tools</strong> (such as the formatter, Ruff).</li>
 </ul>
 </section>
+<section id="files-to-version-control-1" class="level4">
+<h4 class="anchored" data-anchor-id="files-to-version-control-1"><span aria-hidden="true">💾</span> Files to version control</h4>
+<dl>
+<dt><code>pixi.toml</code>/<code>pyproject.toml</code></dt>
+<dd>
+<a href="https://pixi.sh/latest/reference/pixi_manifest/">project (or workspace) settings</a>
+</dd>
+<dt><code>pixi.lock</code></dt>
+<dd>
+<a href="https://pixi.sh/latest/workspace/lockfile/">lockfile</a> (do not edit by hand)
+</dd>
+</dl>
+</section>
 <section id="key-commands-1" class="level4">
 <h4 class="anchored" data-anchor-id="key-commands-1"><span aria-hidden="true">💻</span> Key commands</h4>
 <p>First, <a href="https://pixi.sh/latest/installation/">install <code>pixi</code></a>, restart your terminal, and run:</p>
@@ -277,19 +295,6 @@ install a <a href="https://pixi.sh/latest/global_tools/introduction/">tool that 
 <dt><code>pixi exec ruff</code></dt>
 <dd>
 similar to above, but don’t formally install the tool, just <a href="https://pixi.sh/latest/reference/cli/pixi/exec/">download and run it</a>
-</dd>
-</dl>
-</section>
-<section id="files-to-version-control-1" class="level4">
-<h4 class="anchored" data-anchor-id="files-to-version-control-1"><span aria-hidden="true">💾</span> Files to version control</h4>
-<dl>
-<dt><code>pixi.toml</code>/<code>pyproject.toml</code></dt>
-<dd>
-<a href="https://pixi.sh/latest/reference/pixi_manifest/">project (or workspace) settings</a>
-</dd>
-<dt><code>pixi.lock</code></dt>
-<dd>
-<a href="https://pixi.sh/latest/workspace/lockfile/">lockfile</a> (do not edit by hand)
 </dd>
 </dl>
 </section>
