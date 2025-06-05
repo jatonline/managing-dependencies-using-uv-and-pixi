@@ -34,7 +34,16 @@ Choose the tool you'd like to know more about:
 - It helps you follow best-practices, such as creating **projects with an importable package** (for shared library functions),
   and defining **project scripts**.
 - It allows you to create **isolated scripts** which define their dependencies in a special comment at the top of the file.
+- It allows you to use **temporarily add additional packages** to environment (such as JupyterLab) to a disposable environment. 
 - It allows you to use and **install system-wide tools** (such as the formatter, Ruff).
+
+#### <span aria-hidden="true">💾</span> Files to version control
+
+`pyproject.toml`
+: [project settings](https://docs.astral.sh/uv/concepts/projects/layout/#the-pyprojecttoml)
+
+`uv.lock`
+: [lockfile](https://docs.astral.sh/uv/concepts/projects/layout/#the-lockfile) (do not edit by hand)
 
 #### <span aria-hidden="true">💻</span> Key commands
 
@@ -46,14 +55,20 @@ First, [install `uv`](https://docs.astral.sh/uv/#installation), restart your ter
 `uv init --package`
 : create a project [_with an importable package_](https://docs.astral.sh/uv/concepts/projects/init/#packaged-applications) (for shared library functions)
 
+`uv init --script my_isolated_script.py`
+: create a [script that will run in an isolated environment](https://docs.astral.sh/uv/guides/scripts/#creating-a-python-script)
+
 `uv add pandas`
 : [install packages](https://docs.astral.sh/uv/reference/cli/#uv-add)
 
 `uv run my_script.py`
-: run a Python script in the environment (`python` is not required)
+: run a Python script in the environment (typing `python` is not required)
 
 `uv run jupyter lab`
-: run an installed program in the environment (such as JupyterLab)
+: run an already-installed program in the environment (such as JupyterLab)
+
+`uv run --with jupyter jupyter lab`
+: temporarily add a package (that is not installed) to an environment and run a command from it ([such as JupyterLab](https://docs.astral.sh/uv/guides/integration/jupyter/))
 
 `uv run my_task`
 : run a [project script](https://docs.astral.sh/uv/concepts/projects/config/#entry-points) (defined in `pyproject.toml`)
@@ -61,22 +76,11 @@ First, [install `uv`](https://docs.astral.sh/uv/#installation), restart your ter
 `uv tree`
 : see [installed packages and dependencies](https://docs.astral.sh/uv/reference/cli/#uv-tree)
 
-`uv init --script my_isolated_script.py`
-: create a [script that will run in an isolated environment](https://docs.astral.sh/uv/guides/scripts/#creating-a-python-script)
-
 `uv tool install ruff`
 : install a [tool that can be used system-wide](https://docs.astral.sh/uv/guides/tools/#installing-tools) (such as the formatter, Ruff)
 
 `uvx ruff`
 : similar to above, but don't formally install the tool, [just download and run it](https://docs.astral.sh/uv/guides/tools/#running-tools)
-
-#### <span aria-hidden="true">💾</span> Files to version control
-
-`pyproject.toml`
-: [project settings](https://docs.astral.sh/uv/concepts/projects/layout/#the-pyprojecttoml)
-
-`uv.lock`
-: [lockfile](https://docs.astral.sh/uv/concepts/projects/layout/#the-lockfile) (do not edit by hand)
 
 #### <span aria-hidden="true">🧑‍💻</span> [Example data science project layout](https://github.com/jatonline/managing-dependencies-using-uv-and-pixi/blob/main/playground/uv_lib_demo/files/uv_lib_demo/)
 
@@ -117,6 +121,14 @@ First, [install `uv`](https://docs.astral.sh/uv/#installation), restart your ter
   and defining **project tasks**.
 - It allows you to use and **install system-wide tools** (such as the formatter, Ruff).
 
+#### <span aria-hidden="true">💾</span> Files to version control
+
+`pixi.toml`/`pyproject.toml`
+: [project (or workspace) settings](https://pixi.sh/latest/reference/pixi_manifest/)
+
+`pixi.lock`
+: [lockfile](https://pixi.sh/latest/workspace/lockfile/) (do not edit by hand)
+
 #### <span aria-hidden="true">💻</span> Key commands
 
 First, [install `pixi`](https://pixi.sh/latest/installation/), restart your terminal, and run:
@@ -151,14 +163,6 @@ First, [install `pixi`](https://pixi.sh/latest/installation/), restart your term
 
 `pixi exec ruff`
 : similar to above, but don't formally install the tool, just [download and run it](https://pixi.sh/latest/reference/cli/pixi/exec/)
-
-#### <span aria-hidden="true">💾</span> Files to version control
-
-`pixi.toml`/`pyproject.toml`
-: [project (or workspace) settings](https://pixi.sh/latest/reference/pixi_manifest/)
-
-`pixi.lock`
-: [lockfile](https://pixi.sh/latest/workspace/lockfile/) (do not edit by hand)
 
 #### <span aria-hidden="true">🧑‍💻</span> [Example data science project layout](https://github.com/jatonline/managing-dependencies-using-uv-and-pixi/blob/main/playground/pixi_lib_demo/files/pixi_lib_demo/)
 
