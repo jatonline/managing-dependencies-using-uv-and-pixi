@@ -1,0 +1,609 @@
+---
+title: Can others<br>reproduce your results? <small style="display:block;margin-block:1em">Recipes for using `uv` and `pixi` <br>to manage Python dependencies</small>
+author: James Thomas, j.thomas@bristol.ac.uk
+date: 2025-09-09
+format:
+  revealjs:
+    width: 100%
+    height: 100%
+    fontsize: 3em
+    # width: 1920
+    # height: 1080
+    # fontsize: 3.2em
+---
+
+# Introduction {visibility="hidden"}
+
+## You should try `uv` and `pixi` in your projects {.center}
+
+* What can `uv` and `pixi` do?
+* Some **common pitfalls** when using `pip` and `conda`
+* How these are addressed by `uv` and `pixi`
+* **Practical steps** and **recipes** for using them in projects
+
+::: {.notes}
+* Take home message is that you should use `uv` and `pixi` in your projects
+* I'll argue this by talking about...
+* These are my experiences of using the tools, and I'm hoping you can share your own advice!
+:::
+
+## What can `uv` and `pixi` do?
+
+::::: {.columns}
+:::: {.column}
+
+::: {.box}
+**Like `venv`/`pip` or `conda`**
+
+* create virtual environments
+* install packages
+* `uv`: PyPI
+* `pixi`: conda-forge (or PyPI)
+:::
+
+::: {.box .fragment}
+**Like `poetry`, `pipenv` or `pip-tools`**
+
+* reproducible dependency installations using a _lockfile_
+:::
+
+::::
+:::: {.column}
+
+::: {.box .fragment}
+**Like `pyenv`**
+
+* install multiple `python` versions
+:::
+
+::: {.box .fragment}
+**Like `pipx`**
+
+* install system-wide tools
+:::
+
+::: {.box .fragment}
+**And...** a shared cache...
+:::
+
+::::
+:::::
+
+::: {.notes}
+* uv and pixi (2023-24) incorporate functionality found in several separate tools
+* Some of them, like venv and pip are builtin to python
+* Others are more establish tools that you may be using already
+* Like the combination of venv and pip, or conda, they can ...
+* Like more advanced dependency management tools, can ... (see an example of a lockfile later)
+* Like pyenv, ... (so compact, don't need python, good for bootstrapping)
+* Like pipx, ...
+* Shared cache means new venvs are cheap to create (temporarily add packages, etc.)
+:::
+
+# Motivations for <br>using better tools
+
+## Why not _just use `pip`?_
+
+* `pip` will allow you to install **incompatible dependencies**<br>
+  if you don't install them all at the same time
+
+  ::: {.box}
+  ```
+  pip install -r requirements.txt
+  pip install matplotlib  # don't do this!
+  ```
+  :::
+
+::: {.fragment}
+* difficult to keep track of **direct dependencies** of a project<br>
+  (the ones you _intended_ you use, not just all the dependencies)
+:::
+
+::::: {.fragment}
+:::: {.top-note}
+::: {.box}
+`pip` will allow you to install **incompatible dependencies**<br>
+if you don't install them all at the same time
+:::
+::::
+
+::: {.terminal}
+<iframe src=http://localhost:7001></iframe>
+:::
+
+::: {.notes}
+```
+python -V
+ls
+cat my_script.py
+cat requirements.txt             # project is old
+. .venv/bin/activate
+pip install -r requirements.txt  # numpy 1.21.6, scipy 1.7.3
+python my_script.py
+pip install matplotlib           # note warning and numpy upgrade
+python my_script.py              # broken
+```
+:::
+:::::
+
+## Why not _just use `conda`?_
+
+* `conda` has a faster solver to determine version compatibility (`libmamba`)
+
+::: {.fragment}
+but
+
+* developing across **different platforms** is difficult
+* still difficult to keep track of **direct dependencies**
+* not everyone wants the `conda` ecosystem
+:::
+
+::::: {.fragment}
+:::: {.top-note}
+::: {.box}
+developing across **different platforms** is difficult
+:::
+::::
+
+::: {.terminal}
+<iframe src=http://localhost:7004></iframe>
+:::
+
+::: {.notes}
+```
+ls
+cat my_script.py
+cat environment.yml             # project is old
+conda env create
+conda activate my_env
+python -V
+python my_script.py
+conda export > environment.yml  # at some point will need to do this
+cat environment.yml             # note the build specifications
+git pull
+conda env update --prune        # broken
+cat environment.yml
+```
+:::
+::::
+
+# How do `uv` and `pixi` <br>make your life easier?
+
+## Package installation, environment management
+
+|                                     | `uv`                                      | `pixi`
+| ----------------------------------- | ----------------------------------------- | ----------------------------------------------------
+| Configuration <br> and lockfile     | `pyproject.toml` <br>`uv.lock`            | `pixi.toml` or `pyproject.toml` <br>`pixi.lock`
+: {.comparison-table}
+
+::: {.notes}
+* Splits _intent_ from _actual_
+* May have seen in other tools (or done manually)
+:::
+
+## Package installation, environment management
+
+|                                     | `uv`                                      | `pixi`
+| ----------------------------------- | ----------------------------------------- | ----------------------------------------------------
+| Configuration <br> and lockfile     | `pyproject.toml` <br>`uv.lock`            | `pixi.toml` or `pyproject.toml` <br>`pixi.lock`
+| **Init** a project                  | `uv init --python 3.x`                    | `pixi init`
+| **Add** a package                   | `uv add pandas`                           | `pixi add python=3.x pandas`
+| **Run** python <br>a script         | `uv run python` <br>`uv run my_script.py` | `pixi run python` <br>`pixi run python my_script.py`
+: {.comparison-table}
+
+::: {.notes}
+* Init, add, run pattern
+* No activating needed
+* In conda, python is a package
+* With uv, can skip `python`
+:::
+
+## Package installation, environment management
+
+|                                     | `uv`                                      | `pixi`
+| ----------------------------------- | ----------------------------------------- | ----------------------------------------------------
+| Configuration <br> and lockfile     | `pyproject.toml` <br>`uv.lock`            | `pixi.toml` or `pyproject.toml` <br>`pixi.lock`
+| **Init** a project                  | `uv init --python 3.x`                    | `pixi init`
+| **Add** a package                   | `uv add pandas`                           | `pixi add python=3.x pandas`
+| **Run** python <br>a script         | `uv run python` <br>`uv run my_script.py` | `pixi run python` <br>`pixi run python my_script.py`
+| List packages                       | `uv pip list` <br>`uv tree`               | `pixi list` <br>`pixi tree`
+| Update `.lock`/env <br>and packages | `uv sync` <br>`uv sync --upgrade`         | `pixi install` <br>`pixi update`
+: {.comparison-table}
+
+## Using `uv`
+
+:::: {.top-note}
+::: {.box}
+Install                                                        | Init                   | Add              | Run
+-------------------------------------------------------------- | ---------------------- | ---------------- | ------------------------------------------
+[docs.astral.sh/uv](https://docs.astral.sh/uv/){target=_blank} | `uv init --python 3.x` | `uv add PACKAGE` | `uv run python` <br> `uv run my_script.py`
+:::
+::::
+
+::: {.terminal}
+<iframe src=http://localhost:7002></iframe>
+:::
+
+::: {.notes}
+```
+python                             # not installed
+ls
+curl -LsSf https://astral.sh/uv/install.sh | sh
+restart
+uv init --python 3.10
+ls                                 # can remove remove main.py
+cat pyproject.toml
+cat .python-version
+uv run python -V
+uv add numpy==1.21.6 scipy==1.7.3
+uv run my_script.py                # no activate
+ls
+cat pyproject.toml
+cat uv.lock                        # version control (x3), don't edit uv.lock by hand
+uv add matplotlib                  # older (compatible) version of matplotlib
+uv run my_script.py
+```
+:::
+
+## Using `pixi`
+
+:::: {.top-note}
+::: {.box}
+| Install                                   | Init        | Add                                       | Run
+| ----------------------------------------- | ----------- | ----------------------------------------- | -----------------------------------------------------
+| [pixi.sh](https://pixi.sh){target=_blank} | `pixi init` | `pixi add python` <br> `pixi add PACKAGE` | `pixi run python` <br> `pixi run python my_script.py`
+:::
+::::
+
+::: {.terminal}
+<iframe src=http://localhost:7005></iframe>
+:::
+
+::: {.notes}
+```
+python
+conda
+ls
+curl -fsSL https://pixi.sh/install.sh | sh
+reset
+pixi init
+ls
+cat pixi.toml
+pixi add python=3.10
+pixi run python -V
+pixi add numpy==1.21.6 scipy==1.7.3
+pixi run python my_script.py         # no activate
+ls
+cat pixi.toml
+cat pixi.lock                        # version control (x2), don't edit pixi.lock by hand
+```
+:::
+
+## Multiple platforms with `pixi`
+
+:::: {.top-note}
+::: {.box}
+`pixi workspace platform add ...`
+:::
+::::
+
+::: {.terminal}
+<iframe src=http://localhost:7005></iframe>
+:::
+
+::: {.notes}
+```
+pixi workspace
+pixi workspace platform add osx-arm64 win-64
+cat pixi.toml
+cat pixi.lock
+```
+:::
+
+# Recipes <br><small>and quality fo life improvements</small>
+
+## Projects in `uv`
+
+:::: {.top-note}
+::: {.box}
+| Init project        | Project script     | Inject packages
+| ------------------- | ------------------ | -----------------------------------
+| `uv init --package` | `uv run test-coin` | `uv run --with jupyter jupyter-lab`
+:::
+::::
+
+::: {.terminal}
+<iframe src=http://localhost:7003></iframe>
+:::
+
+::: {.notes}
+```
+# uv init --package
+tree
+cat src/my_project/probability.py
+cat pyproject.toml
+uv run
+uv run test-coin
+uv run --with jupyter jupyter-lab
+```
+
+In the notebook:
+
+* Importing package
+* Autoreloading
+:::
+
+## Projects in `pixi`
+
+:::: {.top-note}
+::: {.box}
+| Init project                   | Project tasks
+| ------------------------------ | ------------------------------------------------------
+| `pixi init --format pyproject` | `pixi run test-coin` (uses `typer`) <br>`pixi run lab`
+:::
+::::
+
+::: {.terminal}
+<iframe src=http://localhost:7006></iframe>
+:::
+
+::: {.notes}
+```
+# pixi init --format project
+tree
+cat pyproject.toml                 # Talk through
+pixi run
+pixi run test-coin
+cat src/my_project/probability.py
+pixi run test-coin --help
+pixi run test-coin --heads-observed 4
+pixi run lab
+```
+:::
+
+## System-wide tools
+
+:::: {.top-note}
+::: {.box}
+| Without installing  | Install system-wide
+| ------------------- | -----------------------------
+| `uvx COMMAND`       | `uv tool install PACKAGE`
+| `pixi exec COMMAND` | `pixi global install PACKAGE`
+:::
+::::
+
+::: {.terminal}
+<iframe src=http://localhost:7003></iframe>
+:::
+
+::: {.notes}
+```
+uvx cowsay -t Moo
+uv tool install cowsay
+cowsay -t Moo
+# for pixi it's cowpy
+```
+:::
+
+## Listing packages
+
+:::: {.top-note}
+::: {.box}
+| List          | Tree _(why do I have this package?)_
+| ------------- | ----------------------------------------
+| `uv pip list` | `uv tree [--package PACKAGE] [--invert]`
+| `pixi list`   | `pixi tree [PACKAGE] [--invert]`
+:::
+::::
+
+::: {.terminal}
+<iframe src=http://localhost:7003></iframe>
+:::
+
+::: {.notes}
+```
+uv pip list
+uv tree --package scipy
+uv tree --package numpy --invert
+```
+:::
+
+## Scripts with inline metadata <small>PEP 723</small>
+
+:::: {.top-note}
+::: {.box}
+`uv init --script my_script.py`<br>
+`uv add --script my_script.py PACKAGE`
+:::
+::::
+
+::: {.terminal}
+<iframe src=http://localhost:7003></iframe>
+:::
+
+::: {.notes}
+```
+cd ../uv_script_demo
+ls
+# uv init --script my_script.py
+# uv add --script my_script.py numpy
+cat my_script.py
+uv run my_script.py       # 1.22.0 was released on 30 Dec 2021
+uv run my_script.py
+```
+:::
+
+# Conslusion {visibility="hidden"}
+
+## Wrapping up
+
+* Find out more: :link: [docs.astral.sh/uv](https://docs.astral.sh/uv/), :link: [pixi.sh](https://pixi.sh/)
+
+* Use for **new projects**
+    * `uv` if PyPI, `pixi` if Conda
+    * package in `src/`
+    * commands `uv run analysis`, `pixi run analysis`
+
+* When working with someone<br>**new to Python**
+    * `uv run ...` could be in a script
+    * `pixi run dashboard`<br>only command they need?
+
+* **Easier** than `conda`/`pip` by themselves
+
+::: {.credits}
+![](../assets/logo.svg){fig-alt="University of Bristol, Jean Golding Institute" width=9em}<br>
+James Thomas<br>
+j.thomas@bristol.ac.uk
+
+<small>[jatonline.github.io/managing-<br>dependencies-using-uv-and-pixi](https://jatonline.github.io/managing-dependencies-using-uv-and-pixi/)</small>
+:::
+
+<style>
+    .reveal {
+        background: #FDFBF0;
+
+        .slide.not(.center) {
+            h2:first-child {
+                margin-top: -1.5%;
+            }
+        }
+
+        h1, h2 {
+            code {
+                opacity: 1;
+                filter: brightness(50%);
+            }
+        }
+
+        h2:has(small) {
+            margin-top: -0.35em;
+            small { display: block }
+        }
+
+        li {
+            &, & p {
+                line-height: 1.3;
+            }
+        }
+
+        .terminal {
+            position: absolute;
+            top: 11.5%;
+            left: -4%;
+            right: -4%;
+            bottom: -4%;
+
+            iframe {
+                max-width: unset;
+                max-height: unset;
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        .box {
+            margin-block: 0.5em 0;
+            padding: 0.25em 1em;
+            border: 0.1em solid #bbbbbb;
+            border-radius: 1em;
+
+            ul li {
+                margin-block: 0 0.3em;
+            }
+
+            .column:has(&) {
+                width: calc(50% - 0.5em);
+                padding-right: 0.5em;
+            }
+        }
+
+        .top-note {
+            position: absolute;
+            top: -3%;
+            right: -4%;
+            z-index: 100;
+
+            .box {
+                background: #FDFBF0;
+                font-size: 75%;
+                margin: 0;
+                padding: 0 0.5em;
+                border-radius: 0.5em;
+            }
+
+            table {
+                colgroup col {
+                    width: unset !important;
+                }
+                th, td {
+                    border: none;
+                    line-height: 1;
+                    padding: 0 1em 0 0;
+                    &:last-child { padding-right: 0 }
+                }
+                margin-block: 0.25em;
+            }
+        }
+
+        table {
+            width: 100%;
+
+            th, td {
+                border-color: #bbbbbb;
+            }
+        }
+
+        pre {
+            background-color: unset;
+            font-size: 0.875em;
+
+            code {
+                background-color: unset;
+                color: var(--quarto-hl-fu-color);
+            }
+        }
+
+        .comparison-table {
+            colgroup {
+                col:nth-child(1) { width: 27% !important }
+                col:nth-child(2) { width: 32% !important }
+                col:nth-child(3) { width: 41% !important }
+            }
+
+            thead th,
+            tbody tr:nth-child(1) td,
+            tbody tr:nth-child(4) td {
+                border-bottom-width: thick;
+            }
+
+            tbody tr:nth-child(4) td:first-child {
+                padding-left: 2.7em;
+                text-indent: -2.2em;
+            }
+
+            &:has(tbody tr:nth-child(4)) tbody {
+                tr:nth-child(1) {
+                    &, & code { color: #6c7191 !important }
+                }
+            }
+
+            &:has(tbody tr:nth-child(6)) tbody {
+                tr:nth-child(2),
+                tr:nth-child(3),
+                tr:nth-child(4) {
+                    &, & code { color: #6c7191 !important }
+                }
+            }
+        }
+
+        aside {
+            z-index: -1;
+        }
+    }
+
+    .reveal-print {
+        .terminal {
+            display: none;
+        }
+    }
+</style>

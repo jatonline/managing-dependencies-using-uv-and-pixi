@@ -5,8 +5,8 @@ services:
   uv_demo:
     build: uv_demo
 
-  uv_lib_demo:
-    build: uv_lib_demo
+  uv_project_demo:
+    build: uv_project_demo
     ports:
       - "8888:8888"
 
@@ -16,7 +16,7 @@ services:
   pixi_demo:
     build: pixi_demo
 
-  pixi_lib_demo:
-    build: pixi_lib_demo
+  pixi_project_demo:
+    build: pixi_project_demo
     ports:
       - "8889:8889"

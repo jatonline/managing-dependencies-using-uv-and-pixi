@@ -15,7 +15,7 @@ export SHELL='bash'
 
 # --------------------------------------------------
 
-alias python='python3'
+. "$HOME/.local/bin/env"
 
-cd ~/pip_demo
+cd ~/uv_project_demo
 clear

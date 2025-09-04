@@ -1,0 +1,65 @@
+# ============================== Project metadata ==============================
+
+[project]
+name = "my_project"
+version = "0.1.0"
+description = "Add a short description here"
+authors = [{name = "James Thomas", email = "j.thomas@bristol.ac.uk"}]
+requires-python = ">= 3.11"
+dependencies = []  # <=== These are the PyPI dependencies, added with: 
+                   #        pixi add --pypi PACKAGE_NAME
+
+[tool.pixi.project]
+channels = ["conda-forge"]
+platforms = [
+    "linux-64",
+    "osx-arm64",
+    "win-64",
+]
+
+# ============================= Conda dependencies =============================
+#                       (see above for PyPI dependencies)
+
+[tool.pixi.dependencies]
+numpy = ">=2.2.2,<3"
+scipy = ">=1.15.1,<2"
+typer = ">=0.15.2,<0.16"  # <=== Provides a nice command line interface (CLI)
+
+# ================== Make this project available as a package ==================
+
+[tool.pixi.pypi-dependencies]
+my_project = { path = ".", editable = true }
+
+[build-system]
+build-backend = "hatchling.build"
+requires = ["hatchling"]
+
+# ========= Specify non-essential dependencies in features/environments ========
+
+# Features were added with:
+#   pixi add --feature notebooks jupyter
+#   pixi add --feature dev ruff pylint
+
+[tool.pixi.feature.notebooks.dependencies]
+jupyter = "*"
+
+[tool.pixi.feature.dev.dependencies]
+ruff = "*"
+pylint = "*"
+
+# Environment was added with:
+#   pixi workspace environment add my-env --feature notebooks --feature dev
+
+[tool.pixi.environments]
+my-env = ["notebooks", "dev"]
+
+# ========================== Define tasks (shortcuts) ==========================
+
+[tool.pixi.tasks]
+test-coin = "python src/my_project/probability.py"
+
+[tool.pixi.feature.notebooks.tasks]
+lab = "jupyter lab"
+
+[tool.pixi.feature.dev.tasks]
+format = "ruff format src/"

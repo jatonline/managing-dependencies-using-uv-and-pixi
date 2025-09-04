@@ -2,9 +2,35 @@ _default:
 	@just --list --unsorted
 
 # Build specified container(s) (defaults to all containers). Hint: run this in advance of a demo
-build DEMO="":
-	podman compose build {{DEMO}}
+build *DEMO:
+	podman compose build {{ DEMO }}
 
 # Run specified container
-run DEMO:
-	podman compose run --rm --service-ports {{DEMO}}
+@run DEMO:
+    echo "Loading {{ DEMO }}..."
+    podman compose run --rm --service-ports {{ DEMO }} 2>/dev/null
+
+# Serve demos over HTTP ports for embedding demos in slides (requires ttyd and tmux)
+serve:
+    #!/bin/bash
+    trap cleanup INT
+    function cleanup() {
+        podman kill $(podman ps -q -f name='^playground_*') >/dev/null
+    }
+    just _launch_server pip_demo 7001 &
+    just _launch_server uv_demo 7002 &
+    just _launch_server uv_project_demo 7003 &
+    just _launch_server conda_demo 7004 &
+    just _launch_server pixi_demo 7005 &
+    just _launch_server pixi_project_demo 7006 &
+    wait
+
+_launch_server DEMO SERVE_PORT:
+    ttyd --port {{ SERVE_PORT }} \
+         --writable \
+         -t fontSize=30 \
+         -t 'theme={"background": "#FDFBF0", "foreground": "black", "selectionBackground": "black", "selectionForeground": "#FDFBF0"}' \
+         -t fontWeight=600 \
+         -t minimumContrastRatio=10 \
+         -t disableLeaveAlert=true \
+         tmux -f tmux.conf new -A -s {{ DEMO }} "just run {{ DEMO }}"

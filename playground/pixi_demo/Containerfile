@@ -1,0 +1,20 @@
+FROM --platform=linux/amd64 ubuntu:24.04
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && \
+    apt-get install -y nano less curl wget tree bat && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+USER ubuntu
+WORKDIR /home/ubuntu
+
+RUN curl -fsSL https://pixi.sh/install.sh | env PIXI_HOME=backup PIXI_NO_PATH_UPDATE=1 sh
+
+COPY --chown=ubuntu files/ .
+
+RUN PIXI=/home/ubuntu/backup/bin/pixi && \
+    cd pixi_backup_demo && \
+    $PIXI init && \
+    $PIXI add python=3.10 numpy==1.21.6 scipy==1.7.3 && \
+    cd .. && \
+    rm -rf .cache

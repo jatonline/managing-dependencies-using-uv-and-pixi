@@ -1,0 +1,20 @@
+FROM --platform=linux/amd64 ubuntu:24.04
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && \
+    apt-get install -y nano less curl wget tree bat && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+USER ubuntu
+WORKDIR /home/ubuntu
+
+RUN curl -fsSL https://astral.sh/uv/install.sh | env UV_UNMANAGED_INSTALL=backup/bin sh
+
+COPY --chown=ubuntu files/ .
+
+RUN UV=/home/ubuntu/backup/bin/uv && \
+    cd uv_backup_demo && \
+    $UV init --python 3.10 && \
+    $UV add numpy==1.21.6 scipy==1.7.3 && \
+    cd .. && \
+    rm -rf .cache .local

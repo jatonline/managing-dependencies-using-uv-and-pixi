@@ -1,0 +1,28 @@
+# NB this version of the image is required for python3.10
+FROM --platform=linux/amd64 ubuntu:22.04
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && \
+    apt-get install -y nano less curl wget tree bat python3-pip python3-venv && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Needed for the 22.04 image
+RUN useradd -s /bin/bash ubuntu
+
+USER ubuntu
+WORKDIR /home/ubuntu
+
+RUN python3 -m venv --prompt venv pip_demo/.venv && \
+    pip_demo/.venv/bin/python -m pip install -U "pip<23" && \
+    python3 -m venv --prompt venv backup_pip_demo/.venv && \
+    backup_pip_demo/.venv/bin/python -m pip install -U "pip<23" && \
+    python3 -m venv --prompt venv backup_pip_demo_broken/.venv && \
+    backup_pip_demo_broken/.venv/bin/python -m pip install -U "pip<23"
+
+COPY --chown=ubuntu files/ .
+COPY --chown=ubuntu files/pip_demo backup_pip_demo
+COPY --chown=ubuntu files/pip_demo backup_pip_demo_broken
+
+RUN backup_pip_demo/.venv/bin/pip install -r pip_demo/requirements.txt && \
+    backup_pip_demo_broken/.venv/bin/pip install -r pip_demo/requirements.txt && \
+    backup_pip_demo_broken/.venv/bin/pip install matplotlib

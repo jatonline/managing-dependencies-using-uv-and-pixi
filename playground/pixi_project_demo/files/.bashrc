@@ -15,7 +15,8 @@ export SHELL='bash'
 
 # --------------------------------------------------
 
-alias python='python3'
+export PATH=$PATH:$HOME/.pixi/bin
+eval "$(pixi completion --shell bash)"
 
-cd ~/pip_demo
+cd ~/pixi_project_demo
 clear
