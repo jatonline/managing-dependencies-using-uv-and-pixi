@@ -2,14 +2,18 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://jatonline.github.io/managing-dependencies-using-uv-and-pixi/slides/uv/index.html</loc>
-    <lastmod>2025-06-05T06:31:05.682Z</lastmod>
-  </url>
-  <url>
-    <loc>https://jatonline.github.io/managing-dependencies-using-uv-and-pixi/index.html</loc>
-    <lastmod>2025-06-05T06:44:17.869Z</lastmod>
+    <lastmod>2025-09-07T18:21:46.833Z</lastmod>
   </url>
   <url>
     <loc>https://jatonline.github.io/managing-dependencies-using-uv-and-pixi/slides/pixi/index.html</loc>
-    <lastmod>2025-06-05T06:31:05.682Z</lastmod>
+    <lastmod>2025-09-07T18:21:46.833Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jatonline.github.io/managing-dependencies-using-uv-and-pixi/index.html</loc>
+    <lastmod>2025-09-07T18:21:47.305Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jatonline.github.io/managing-dependencies-using-uv-and-pixi/slides/rsecon/index.html</loc>
+    <lastmod>2025-09-07T18:21:54.600Z</lastmod>
   </url>
 </urlset>

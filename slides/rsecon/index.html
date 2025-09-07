@@ -9,9 +9,9 @@
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.7.33">
 
-  <meta name="author" content="James Thomas   j.thomas@bristol.ac.uk">
-  <meta name="dcterms.date" content="2025-06-05">
-  <title>Can others reproduce your conda results? Using pixi to manage dependencies in a Python data analysis project</title>
+  <meta name="author" content="James Thomas, j.thomas@bristol.ac.uk">
+  <meta name="dcterms.date" content="2025-09-09">
+  <title>Can others reproduce your results? Recipes for using uv and pixi  to manage Python dependencies</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -30,7 +30,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-40b470390194e9235ff2ab7f40894c05.css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-358842b68c61f44d98033c297f1e0b22.css">
   <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -128,76 +128,144 @@
     <div class="slides">
 
 <section id="title-slide" data-background-image="../assets/logo.svg" data-background-position="top 2rem right 2rem" data-background-size="min(14rem, 100%)" class="quarto-title-block center">
-  <h1 class="title">Can others reproduce<br>your <code>conda</code> results?<br><small>Using <code>pixi</code> to manage dependencies<br>in a Python data analysis project</small></h1>
+  <h1 class="title">Can others<br>reproduce your results? <small style="display:block;margin-block:1em">Recipes for using <code>uv</code> and <code>pixi</code> <br>to manage Python dependencies</small></h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-James Thomas <br> j.thomas@bristol.ac.uk 
+James Thomas, j.thomas@bristol.ac.uk 
 </div>
 </div>
 </div>
 
-  <p class="date">2025-06-05</p>
+  <p class="date">2025-09-09</p>
 </section>
-<section id="outline" class="slide level2">
-<h2>Outline</h2>
+<section>
+
+<section id="you-should-try-uv-and-pixi-in-your-projects" class="slide level2 center">
+<h2>You should try <code>uv</code> and <code>pixi</code> in your projects</h2>
 <ul>
-<li><strong>What is</strong> <code>pixi</code>? (and <code>uv</code>?)</li>
-<li><strong>Why</strong> might you want to use <code>pixi</code> over <code>conda</code>?</li>
-<li>How do you <strong>configure</strong> <code>pixi</code>?</li>
-<li><strong>Example</strong> of what this means for a data science project</li>
+<li>What can <code>uv</code> and <code>pixi</code> do?</li>
+<li>Some <strong>common pitfalls</strong> when using <code>pip</code> and <code>conda</code></li>
+<li>How these are addressed by <code>uv</code> and <code>pixi</code></li>
+<li><strong>Practical steps</strong> and <strong>recipes</strong> for using them in projects</li>
+</ul>
+<aside class="notes">
+<ul>
+<li>Take home message is that you should use <code>uv</code> and <code>pixi</code> in your projects</li>
+<li>I’ll argue this by talking about…</li>
+<li>These are my experiences of using the tools, and I’m hoping you can share your own advice!</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="what-can-uv-and-pixi-do" class="slide level2">
+<h2>What can <code>uv</code> and <code>pixi</code> do?</h2>
+<div class="columns">
+<div class="column">
+<div class="box">
+<p><strong>Like <code>venv</code>/<code>pip</code> or <code>conda</code></strong></p>
+<ul>
+<li>create virtual environments</li>
+<li>install packages</li>
+<li><code>uv</code>: PyPI</li>
+<li><code>pixi</code>: conda-forge (or PyPI)</li>
+</ul>
+</div>
+<div class="box fragment">
+<p><strong>Like <code>poetry</code>, <code>pipenv</code> or <code>pip-tools</code></strong></p>
+<ul>
+<li>reproducible dependencies installations using a <em>lockfile</em></li>
+</ul>
+</div>
+</div><div class="column">
+<div class="box fragment">
+<p><strong>Like <code>pyenv</code></strong></p>
+<ul>
+<li>install multiple <code>python</code> versions</li>
+</ul>
+</div>
+<div class="box fragment">
+<p><strong>Like <code>pipx</code></strong></p>
+<ul>
+<li>install system-wide tools</li>
+</ul>
+</div>
+<div class="box fragment">
+<p><strong>And…</strong> a shared cache…</p>
+</div>
+</div></div>
+<aside class="notes">
+<ul>
+<li>uv and pixi (2023-24) incorporate functionality found in several separate tools</li>
+<li>Some of them, like venv and pip are builtin to python</li>
+<li>Others are more establish tools that you may be using already</li>
+<li>Like the combination of venv and pip, or conda, they can …</li>
+<li>Like more advanced dependency management tools, can … (see an example of a lockfile later)</li>
+<li>Like pyenv, … (so compact, don’t need python, good for bootstrapping)</li>
+<li>Like pipx, …</li>
+<li>Shared cache means new venvs are cheap to create (temporarily add packages, etc.)</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="motivations-for-using-better-tools" class="title-slide slide level1 center">
+<h1>Motivations for <br>using better tools</h1>
+
+</section>
+<section id="why-not-just-use-pip" class="slide level2">
+<h2>Why not <em>just use <code>pip</code>?</em></h2>
+<ul>
+<li><p><code>pip</code> will allow you to install <strong>incompatible dependencies</strong><br> if you don’t install them all at the same time</p>
+<div class="box">
+<pre><code>pip install -r requirements.txt
+pip install matplotlib  # don't do this!</code></pre>
+</div></li>
 </ul>
 <div class="fragment">
-<p>Note:</p>
 <ul>
-<li>I am not the developer of these tools</li>
-<li>You may well know more than me – tips welcome, and thank you to my colleagues Léo and Rita for the feedback <span class="emoji" data-emoji="grin">😁</span></li>
+<li>difficult to keep track of <strong>direct dependencies</strong> of a project<br> (the ones you <em>intended</em> you use, not just all the dependencies)</li>
 </ul>
 </div>
-</section>
-<section id="what-does-pixi-do" class="slide level2">
-<h2>What does <code>pixi</code> do?</h2>
-<p>Similar to <code>conda</code>, like <code>uv</code>, <code>poetry</code>, <code>npm</code>, …</p>
-<ul>
-<li>install <code>conda</code> packages (<code>python</code> or <code>R</code>) or PyPI packages</li>
-<li>manage a conda environment (<code>.pixi</code>) and lockfile</li>
-<li>multi-platform support</li>
-</ul>
-<aside class="notes">
-<ul>
-<li>Set up a new (Python) project using modern best-practices for reproducibility.</li>
-<li>Start using an existing project with minimal commands (less than with conda).</li>
-<li>Keeps environment up-to-date more easily with other developers (which could be other people, or just you in the future!) Also makes it good for bootstrapping where someone doesn’t currently have Python.</li>
-<li>Supports development across multiple platforms (the tool is cross-platform, but it also allows developers to be on different platforms, too).</li>
-</ul>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 <div class="fragment">
-<p>and:</p>
-<ul>
-<li>globally-accessible tools <code>pixi global</code> or <code>pixi exec</code></li>
-<li>task runner</li>
-<li>create multiple environments</li>
-<li>easy to install, fast</li>
-</ul>
+<div class="top-note">
+<div class="box">
+<p><code>pip</code> will allow you to install <strong>incompatible dependencies</strong><br> if you don’t install them all at the same time</p>
+</div>
+</div>
+<div class="terminal">
+<iframe src="http://localhost:7001">
+</iframe>
+</div>
 <aside class="notes">
-<p>Can:</p>
-<ul>
-<li>Install (or just use) tools with pylint, ruff system-wide.</li>
-<li>Define shortcuts for frequently-run commands (called tasks) - useful for new users.</li>
-<li>Create separate environments for testing, documentation, so not all packages installed at once - useful if some dependencies are large.</li>
-<li>Becomes more useful as a project grows.</li>
-</ul>
+<pre><code>python -V
+ls
+cat my_script.py
+cat requirements.txt             # project is old
+. .venv/bin/activate
+pip install -r requirements.txt  # numpy 1.21.6, scipy 1.7.3
+python my_script.py
+pip install matplotlib           # note warning and numpy upgrade
+python my_script.py              # broken</code></pre>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -211,49 +279,87 @@ James Thomas <br> j.thomas@bristol.ac.uk
       }</style></aside>
 </div>
 </section>
-<section class="slide level2">
-
-<h3 id="number-of-pixi-releases-by-month">Number of <code>pixi</code> releases, by month</h3>
-
-<img data-src="pixi-releases.png" alt="Bar chart showing number of monthly pixi releases since June 2023. There are 2-5 releases per month, gradually increasing over time. The maximum is currently 7 releases in March 2025." class="r-stretch"><aside class="notes">
+<section id="why-not-just-use-conda" class="slide level2">
+<h2>Why not <em>just use <code>conda</code>?</em></h2>
 <ul>
-<li>From the developers of mamba (now used in conda - e.g.&nbsp;miniforge) and micromamba.</li>
-<li>First released in June 2023, actively developed.</li>
-<li>Many recent releases have been to make speed and resource-use improvements.</li>
+<li><code>conda</code> has a faster solver to determine version compatibility (<code>libmamba</code>)</li>
 </ul>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="what-does-uv-do" class="slide level2">
-<h2>What does <code>uv</code> do?</h2>
-<div class="old">
-<p>Similar to <span class="new"><code>venv</code> + <code>pip</code></span>, like <code>pip-tools</code>, <code>poetry</code>, …</p>
+<div class="fragment">
+<p>but</p>
 <ul>
-<li><span class="new">install PyPI packages</span></li>
-<li>manage a virtual environment (<span class="new"><code>.venv</code></span>) and lockfile</li>
-</ul>
-<p>and:</p>
-<ul>
-<li>cheap <span class="new">disposable environments</span> (<code>jupyter lab</code>, <code>pytest</code>)</li>
-<li><span class="new">inline script metadata</span> (recreating bugs, demos)</li>
-<li>globally-accessible tools with <code>uvx</code> (<code>ruff</code>, <code>visidata</code>)</li>
-<li>cross-platform, easy to install, fast</li>
+<li>developing across <strong>different platforms</strong> is difficult</li>
+<li>still difficult to keep track of <strong>direct dependencies</strong></li>
+<li>not everyone wants the <code>conda</code> ecosystem</li>
 </ul>
 </div>
+<div class="fragment">
+<div class="top-note">
+<div class="box">
+<p>developing across <strong>different platforms</strong> is difficult</p>
+</div>
+</div>
+<div class="terminal">
+<iframe src="http://localhost:7004">
+</iframe>
+</div>
+<aside class="notes">
+<pre><code>ls
+cat my_script.py
+cat environment.yml             # project is old
+conda env create
+conda activate my_env
+python -V
+python my_script.py
+conda export &gt; environment.yml  # at some point will need to do this
+cat environment.yml             # note the build specifications
+git pull
+conda env update --prune        # broken
+cat environment.yml</code></pre>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section></section>
+<section>
+<section id="how-do-uv-and-pixi-make-your-life-easier" class="title-slide slide level1 center">
+<h1>How do <code>uv</code> and <code>pixi</code> <br>make your life easier?</h1>
+
+</section>
+<section id="package-installation-environment-management" class="slide level2">
+<h2>Package installation, environment management</h2>
+<table class="comparison-table caption-top">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 32%">
+<col style="width: 40%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th><code>uv</code></th>
+<th><code>pixi</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Configuration <br> and lockfile</td>
+<td><code>pyproject.toml</code> <br><code>uv.lock</code></td>
+<td><code>pixi.toml</code> or <code>pyproject.toml</code> <br><code>pixi.lock</code></td>
+</tr>
+</tbody>
+</table>
 <aside class="notes">
 <ul>
-<li>uv can be thought of as the pixi equivalent for the PyPI ecosystem (in fact, pixi uses it to install PyPI packages!)</li>
-<li>Similarly allows you to install different versions of Python, so again, good for bootstrapping new users.</li>
-<li>Advise check it out - remainder of this talk will focus on pixi, but concepts are similar.</li>
+<li>Splits <em>intent</em> from <em>actual</em></li>
+<li>May have seen in other tools (or done manually)</li>
 </ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -267,35 +373,50 @@ James Thomas <br> j.thomas@bristol.ac.uk
           display:block!important;
       }</style></aside>
 </section>
-<section id="why-properly-managing-dependencies-is-important-a-motivating-example-using-conda" class="slide level2 center">
-<h2>Why <em>properly</em> managing dependencies<br>is important <small style="vertical-align:middle">(a motivating example using <code>conda</code>)</small></h2>
-<video controls="" preload="none">
-<source type="video/mp4" src="videos/coding1.mp4">
-</video>
+<section id="package-installation-environment-management-1" class="slide level2">
+<h2>Package installation, environment management</h2>
+<table class="comparison-table caption-top">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 32%">
+<col style="width: 40%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th><code>uv</code></th>
+<th><code>pixi</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Configuration <br> and lockfile</td>
+<td><code>pyproject.toml</code> <br><code>uv.lock</code></td>
+<td><code>pixi.toml</code> or <code>pyproject.toml</code> <br><code>pixi.lock</code></td>
+</tr>
+<tr class="even">
+<td><strong>Init</strong> a project</td>
+<td><code>uv init --python 3.x</code></td>
+<td><code>pixi init</code></td>
+</tr>
+<tr class="odd">
+<td><strong>Add</strong> a package</td>
+<td><code>uv add pandas</code></td>
+<td><code>pixi add python=3.x pandas</code></td>
+</tr>
+<tr class="even">
+<td><strong>Run</strong> python <br>a script</td>
+<td><code>uv run python</code> <br><code>uv run my_script.py</code></td>
+<td><code>pixi run python</code> <br><code>pixi run python my_script.py</code></td>
+</tr>
+</tbody>
+</table>
 <aside class="notes">
 <ul>
-<li>Promised an example (<code>conda_demo</code>). Will show why, when you use conda, you should be careful about keeping track of your dependencies.</li>
-<li><code>ls -A</code> - start with a skeleton system with conda installed, a my_script.py and an environment.yml file</li>
-<li><code>cat my_script.py</code> that performs simple hypothesis test using scipy</li>
-<li><code>cat environment.yml</code> is hand-crafted - can see this project was created a while ago, versions are old</li>
-<li><code>conda env create</code></li>
-<li><code>conda activate my_env</code> (note the env at the start of the prompt)</li>
-<li><code>which python</code></li>
-<li><code>python -V</code></li>
-<li><code>python my_script.py</code></li>
-<li>Now want to do some more analysis using Pandas (could add pandas by hand to the environment.yml, but…)</li>
-<li><code>conda install pandas</code></li>
-<li>Should also note version and update the environment.yml at the same time</li>
-<li><code>nano environment.yml</code></li>
-<li>Need to remember to do this - if working by yourself and being careful, this may be fine</li>
-<li>At some point, will forget</li>
-<li><code>conda env export</code></li>
-<li>But amongst desired packages there are lots of dependencies - unclear which is which</li>
-<li><code>conda env export --from-history</code> (but won’t get the version)</li>
-<li>But others will probably forget to commit, or forget the arguments to the export command</li>
-<li>And <code>--from-history</code> won’t recreate using the same versions of the dependencies</li>
-<li>So should really export everything</li>
-<li>And/or at some point will likely get a full export from someone else</li>
+<li>Init, add, run pattern</li>
+<li>No activating needed</li>
+<li>In conda, python is a package</li>
+<li>With uv, can skip <code>python</code></li>
 </ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -309,19 +430,244 @@ James Thomas <br> j.thomas@bristol.ac.uk
           display:block!important;
       }</style></aside>
 </section>
-<section id="someone-else-updates-the-project-and-theyre-using-another-platform" class="slide level2 center">
-<h2>Someone else updates the project<br><small>(and they’re using another platform)</small></h2>
-<video controls="" preload="none">
-<source type="video/mp4" src="videos/coding2.mp4">
-</video>
+<section id="package-installation-environment-management-2" class="slide level2">
+<h2>Package installation, environment management</h2>
+<table class="comparison-table caption-top">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 32%">
+<col style="width: 40%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th><code>uv</code></th>
+<th><code>pixi</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Configuration <br> and lockfile</td>
+<td><code>pyproject.toml</code> <br><code>uv.lock</code></td>
+<td><code>pixi.toml</code> or <code>pyproject.toml</code> <br><code>pixi.lock</code></td>
+</tr>
+<tr class="even">
+<td><strong>Init</strong> a project</td>
+<td><code>uv init --python 3.x</code></td>
+<td><code>pixi init</code></td>
+</tr>
+<tr class="odd">
+<td><strong>Add</strong> a package</td>
+<td><code>uv add pandas</code></td>
+<td><code>pixi add python=3.x pandas</code></td>
+</tr>
+<tr class="even">
+<td><strong>Run</strong> python <br>a script</td>
+<td><code>uv run python</code> <br><code>uv run my_script.py</code></td>
+<td><code>pixi run python</code> <br><code>pixi run python my_script.py</code></td>
+</tr>
+<tr class="odd">
+<td>List packages</td>
+<td><code>uv pip list</code> <br><code>uv tree</code></td>
+<td><code>pixi list</code> <br><code>pixi tree</code></td>
+</tr>
+<tr class="even">
+<td>Update <code>.lock</code>/env <br>and packages</td>
+<td><code>uv sync</code> <br><code>uv sync --upgrade</code></td>
+<td><code>pixi install</code> <br><code>pixi update</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="using-uv" class="slide level2">
+<h2>Using <code>uv</code></h2>
+<div class="top-note">
+<div class="box">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Install</th>
+<th>Init</th>
+<th>Add</th>
+<th>Run</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="https://docs.astral.sh/uv/" target="_blank">docs.astral.sh/uv</a></td>
+<td><code>uv init --python 3.x</code></td>
+<td><code>uv add PACKAGE</code></td>
+<td><code>uv run python</code> <br> <code>uv run my_script.py</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="terminal">
+<iframe src="http://localhost:7002">
+</iframe>
+</div>
 <aside class="notes">
+<pre><code>python                             # not installed
+ls
+curl -LsSf https://astral.sh/uv/install.sh | sh
+restart
+uv init --python 3.10
+ls                                 # can remove remove main.py
+cat pyproject.toml
+cat .python-version
+uv run python -V
+uv add numpy==1.21.6 scipy==1.7.3
+uv run my_script.py                # no activate
+ls
+cat pyproject.toml
+cat uv.lock                        # version control (x3), don't edit uv.lock by hand
+uv add matplotlib                  # older (compatible) version of matplotlib
+uv run my_script.py</code></pre>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="using-pixi" class="slide level2">
+<h2>Using <code>pixi</code></h2>
+<div class="top-note">
+<div class="box">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Install</th>
+<th>Init</th>
+<th>Add</th>
+<th>Run</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="https://pixi.sh" target="_blank">pixi.sh</a></td>
+<td><code>pixi init</code></td>
+<td><code>pixi add python</code> <br> <code>pixi add PACKAGE</code></td>
+<td><code>pixi run python</code> <br> <code>pixi run python my_script.py</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="terminal">
+<iframe src="http://localhost:7005">
+</iframe>
+</div>
+<aside class="notes">
+<pre><code>python
+conda
+ls
+curl -fsSL https://pixi.sh/install.sh | sh
+reset
+pixi init
+ls
+cat pixi.toml
+pixi add python=3.10
+pixi run python -V
+pixi add numpy==1.21.6 scipy==1.7.3
+pixi run python my_script.py         # no activate
+ls
+cat pixi.toml
+cat pixi.lock                        # version control (x2), don't edit pixi.lock by hand</code></pre>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="multiple-platforms-with-pixi" class="slide level2">
+<h2>Multiple platforms with <code>pixi</code></h2>
+<div class="top-note">
+<div class="box">
+<p><code>pixi workspace platform add ...</code></p>
+</div>
+</div>
+<div class="terminal">
+<iframe src="http://localhost:7005">
+</iframe>
+</div>
+<aside class="notes">
+<pre><code>pixi workspace
+pixi workspace platform add osx-arm64 win-64
+cat pixi.toml
+cat pixi.lock</code></pre>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="recipes-and-quality-fo-life-improvements" class="title-slide slide level1 center">
+<h1>Recipes <br><small>and quality fo life improvements</small></h1>
+
+</section>
+<section id="projects-in-uv" class="slide level2">
+<h2>Projects in <code>uv</code></h2>
+<div class="top-note">
+<div class="box">
+<table class="caption-top">
+<colgroup>
+<col style="width: 26%">
+<col style="width: 25%">
+<col style="width: 48%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Init project</th>
+<th>Project script</th>
+<th>Inject packages</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>uv init --package</code></td>
+<td><code>uv run test-coin</code></td>
+<td><code>uv run --with jupyter jupyter-lab</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="terminal">
+<iframe src="http://localhost:7003">
+</iframe>
+</div>
+<aside class="notes">
+<pre><code># uv init --package
+tree
+cat src/my_project/probability.py
+cat pyproject.toml
+uv run
+uv run test-coin
+uv run --with jupyter jupyter-lab</code></pre>
+<p>In the notebook:</p>
 <ul>
-<li><code>cd ../conda_demo_updated_on_mac</code></li>
-<li><code>ls -A</code></li>
-<li><code>conda env update --prune</code></li>
-<li>Error is confusing - can’t even find scipy or python, but if eagle-eyed, might notice “osxarm64” (this export was from a Mac running on Apple Silicon, not Linux (WSL) running on Intel)</li>
-<li>Could try removing the <strong>build specifications</strong> at the end of the version numbers (after the final <code>=</code>) - might work but probably won’t if there are specific dependencies for one platform and not another</li>
-<li>Would have to look through the diff manually and the imports in the project’s Python code to try to reconstruct this list - very tedious, and this is only for 2 packages</li>
+<li>Importing package</li>
+<li>Autoreloading</li>
 </ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -335,32 +681,44 @@ James Thomas <br> j.thomas@bristol.ac.uk
           display:block!important;
       }</style></aside>
 </section>
-<section id="what-about-the-workflow-with-pixi" class="slide level2 center">
-<h2>What about the workflow with <code>pixi</code>?</h2>
-<video controls="" preload="none">
-<source type="video/mp4" src="videos/coding3.mp4">
-</video>
+<section id="projects-in-pixi" class="slide level2">
+<h2>Projects in <code>pixi</code></h2>
+<div class="top-note">
+<div class="box">
+<table class="caption-top">
+<colgroup>
+<col style="width: 35%">
+<col style="width: 64%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Init project</th>
+<th>Project tasks</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>pixi init --format pyproject</code></td>
+<td><code>pixi run test-coin</code> (uses <code>typer</code>) <br><code>pixi run lab</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="terminal">
+<iframe src="http://localhost:7006">
+</iframe>
+</div>
 <aside class="notes">
-<ul>
-<li>(<code>pixi_demo</code>)</li>
-<li><code>ls -A</code> note no conda or python installed (<code>python</code>)</li>
-<li><a href="https://pixi.sh/latest/" class="uri">https://pixi.sh/latest/</a> and <code>curl -fsSL https://pixi.sh/install.sh | sh</code> (care with commands like this)</li>
-<li><code>pixi</code></li>
-<li><code>pixi init</code></li>
-<li><code>ls -A</code></li>
-<li><code>cat pixi.toml</code></li>
-<li><code>pixi add python=3.10</code></li>
-<li><code>pixi run python -V</code> to verify version</li>
-<li><code>pixi add numpy==1.21.6 scipy==1.7.3</code> (as before)</li>
-<li><code>pixi run python my_script.py</code> (<strong>note</strong> no need to activate)</li>
-<li>What has happened?</li>
-<li><code>ls -A</code></li>
-<li><code>cat pixi.toml</code></li>
-<li><code>cat pixi.lock</code> (a YAML file with all the matching versions of the packages installed, plus - scroll down - hashes)</li>
-<li>(version control both of these - automatically up-to-date)</li>
-<li><code>pixi list</code> to view the actual installed packages more comfortably</li>
-<li>Finally, <code>ls -A .pixi</code> (could delete this, and it would be created again)</li>
-</ul>
+<pre><code># pixi init --format project
+tree
+cat pyproject.toml                 # Talk through
+pixi run
+pixi run test-coin
+cat src/my_project/probability.py
+pixi run test-coin --help
+pixi run test-coin --heads-observed 4
+pixi run lab</code></pre>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -373,25 +731,39 @@ James Thomas <br> j.thomas@bristol.ac.uk
           display:block!important;
       }</style></aside>
 </section>
-<section id="making-changes-to-the-project-adding-new-dependencies-and-new-developers" class="slide level2 center">
-<h2>Making changes to the project<br><small>(adding new dependencies and new developers)</small></h2>
-<video controls="" preload="none">
-<source type="video/mp4" src="videos/coding4.mp4">
-</video>
+<section id="system-wide-tools" class="slide level2">
+<h2>System-wide tools</h2>
+<div class="top-note">
+<div class="box">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Without installing</th>
+<th>Install system-wide</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>uvx COMMAND</code></td>
+<td><code>uv tool install PACKAGE</code></td>
+</tr>
+<tr class="even">
+<td><code>pixi exec COMMAND</code></td>
+<td><code>pixi global install PACKAGE</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="terminal">
+<iframe src="http://localhost:7003">
+</iframe>
+</div>
 <aside class="notes">
-<ul>
-<li>Now see what happens when want to add new dependency or a new developer</li>
-<li>Want to add pandas</li>
-<li><code>pixi add pandas</code></li>
-<li><code>cat pixi.toml</code></li>
-<li><code>pixi list</code></li>
-<li>Have some new developers, on Mac and Windows - could edit <code>pixi.toml</code> by hand, but can use the CLI</li>
-<li><code>pixi workspace</code></li>
-<li><code>pixi workspace platform osx-arm64 win-64</code></li>
-<li><code>cat pixi.toml</code></li>
-<li><code>cat pixi.lock</code></li>
-<li><code>pixi tree</code></li>
-</ul>
+<pre><code>uvx cowsay -t Moo
+uv tool install cowsay
+cowsay -t Moo
+# for pixi it's cowpy</code></pre>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -404,26 +776,38 @@ James Thomas <br> j.thomas@bristol.ac.uk
           display:block!important;
       }</style></aside>
 </section>
-<section id="applying-this-in-a-data-science-context" class="slide level2 center">
-<h2>Applying this in a data science context</h2>
-<video controls="" preload="none">
-<source type="video/mp4" src="videos/coding5.mp4">
-</video>
+<section id="listing-packages" class="slide level2">
+<h2>Listing packages</h2>
+<div class="top-note">
+<div class="box">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>List</th>
+<th>Tree <em>(why do I have this package?)</em></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>uv pip list</code></td>
+<td><code>uv tree [--package PACKAGE] [--invert]</code></td>
+</tr>
+<tr class="even">
+<td><code>pixi list</code></td>
+<td><code>pixi tree [PACKAGE] [--invert]</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="terminal">
+<iframe src="http://localhost:7003">
+</iframe>
+</div>
 <aside class="notes">
-<ul>
-<li>(<code>pixi_lib_demo</code>)</li>
-<li><code>tree</code> to show layout</li>
-<li>Started with <code>pixi init --format pyproject</code> which creates <code>pyproject.toml</code>, not a <code>pixi.toml</code> (used by other Python tools as well)</li>
-<li><code>cat pyproject.toml</code> (similar to <code>pixi.toml</code> however sections start with <code>tool.pixi.</code> - talk through the comments, however unlikely time to go through everything)</li>
-<li><code>cat src/my_project/probability.py</code> (now in functions taking arguments, and using typer, a CLI library)</li>
-<li>Look at notebook later</li>
-<li><code>pixi run</code></li>
-<li><code>pixi run probability</code> (note underscore changed to a hyphen)</li>
-<li><code>pixi run probability test-coin</code> (<code>--help</code> and try arguments)</li>
-<li><code>pixi run</code> (again)</li>
-<li><code>pixi run lab</code></li>
-<li>Look at notebooks including importing <code>probability.py</code> and autoreloading</li>
-</ul>
+<pre><code>uv pip list
+uv tree --package scipy
+uv tree --package numpy --invert</code></pre>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -436,20 +820,25 @@ James Thomas <br> j.thomas@bristol.ac.uk
           display:block!important;
       }</style></aside>
 </section>
-<section id="other-tips" class="slide level2 center">
-<h2>Other tips</h2>
-<video controls="" preload="none">
-<source type="video/mp4" src="videos/coding6.mp4">
-</video>
+<section id="scripts-with-inline-metadata-pep-723" class="slide level2">
+<h2>Scripts with inline metadata <small>PEP 723</small></h2>
+<div class="top-note">
+<div class="box">
+<p><code>uv init --script my_script.py</code><br> <code>uv add --script my_script.py PACKAGE</code></p>
+</div>
+</div>
+<div class="terminal">
+<iframe src="http://localhost:7003">
+</iframe>
+</div>
 <aside class="notes">
-<ul>
-<li>Global tools
-<ul>
-<li><code>pixi exec ruff</code> (faster the next time)</li>
-<li><code>pixi global install quarto</code> (then just <code>quarto</code>)</li>
-<li>useful for running tools from conda without having to install them separately</li>
-</ul></li>
-</ul>
+<pre><code>cd ../uv_script_demo
+ls
+# uv init --script my_script.py
+# uv add --script my_script.py numpy
+cat my_script.py
+uv run my_script.py       # 1.22.0 was released on 30 Dec 2021
+uv run my_script.py</code></pre>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -461,19 +850,22 @@ James Thomas <br> j.thomas@bristol.ac.uk
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-</section>
+</section></section>
+<section>
+
 <section id="wrapping-up" class="slide level2">
 <h2>Wrapping up</h2>
 <ul>
-<li><p>Find out more: <span class="emoji" data-emoji="link">🔗</span> <a href="https://pixi.sh/">pixi.sh</a> (and <span class="emoji" data-emoji="link">🔗</span> <a href="https://docs.astral.sh/uv/">docs.astral.sh/uv</a>)</p></li>
+<li><p>Find out more: <span class="emoji" data-emoji="link">🔗</span> <a href="https://docs.astral.sh/uv/">docs.astral.sh/uv</a>, <span class="emoji" data-emoji="link">🔗</span> <a href="https://pixi.sh/">pixi.sh</a></p></li>
 <li><p>Use for <strong>new projects</strong></p>
 <ul>
-<li><code>pixi</code> if Conda (<code>uv</code> if just PyPI)</li>
+<li><code>uv</code> if PyPI, <code>pixi</code> if Conda</li>
 <li>package in <code>src/</code></li>
-<li>commands <code>pixi run analysis</code></li>
+<li>commands <code>uv run analysis</code>, <code>pixi run analysis</code></li>
 </ul></li>
 <li><p>When working with someone<br><strong>new to Python</strong></p>
 <ul>
+<li><code>uv run ...</code> could be in a script</li>
 <li><code>pixi run dashboard</code><br>only command they need?</li>
 </ul></li>
 <li><p><strong>Easier</strong> than <code>conda</code>/<code>pip</code> by themselves</p></li>
@@ -482,9 +874,158 @@ James Thomas <br> j.thomas@bristol.ac.uk
 <p><img data-src="../assets/logo.svg" style="width:9em" alt="University of Bristol, Jean Golding Institute"><br> James Thomas<br> j.thomas@bristol.ac.uk</p>
 <p><small><a href="https://jatonline.github.io/managing-dependencies-using-uv-and-pixi/">jatonline.github.io/managing-<br>dependencies-using-uv-and-pixi</a></small></p>
 </div>
+<style>
+    .reveal {
+        background: #FDFBF0;
+
+        .slide.not(.center) {
+            h2:first-child {
+                margin-top: -1.5%;
+            }
+        }
+
+        h1, h2 {
+            code {
+                opacity: 1;
+                filter: brightness(50%);
+            }
+        }
+
+        h2:has(small) {
+            margin-top: -0.35em;
+            small { display: block }
+        }
+
+        li {
+            &, & p {
+                line-height: 1.3;
+            }
+        }
+
+        .terminal {
+            position: absolute;
+            top: 11.5%;
+            left: -4%;
+            right: -4%;
+            bottom: -4%;
+
+            iframe {
+                max-width: unset;
+                max-height: unset;
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        .box {
+            margin-block: 0.5em 0;
+            padding: 0.25em 1em;
+            border: 0.1em solid #bbbbbb;
+            border-radius: 1em;
+
+            ul li {
+                margin-block: 0 0.3em;
+            }
+
+            .column:has(&) {
+                width: calc(50% - 0.5em);
+                padding-right: 0.5em;
+            }
+        }
+
+        .top-note {
+            position: absolute;
+            top: -3%;
+            right: -4%;
+            z-index: 100;
+
+            .box {
+                background: #FDFBF0;
+                font-size: 75%;
+                margin: 0;
+                padding: 0 0.5em;
+                border-radius: 0.5em;
+            }
+
+            table {
+                colgroup col {
+                    width: unset !important;
+                }
+                th, td {
+                    border: none;
+                    line-height: 1;
+                    padding: 0 1em 0 0;
+                    &:last-child { padding-right: 0 }
+                }
+                margin-block: 0.25em;
+            }
+        }
+
+        table {
+            width: 100%;
+
+            th, td {
+                border-color: #bbbbbb;
+            }
+        }
+
+        pre {
+            background-color: unset;
+            font-size: 0.875em;
+
+            code {
+                background-color: unset;
+                color: var(--quarto-hl-fu-color);
+            }
+        }
+
+        .comparison-table {
+            colgroup {
+                col:nth-child(1) { width: 27% !important }
+                col:nth-child(2) { width: 32% !important }
+                col:nth-child(3) { width: 41% !important }
+            }
+
+            thead th,
+            tbody tr:nth-child(1) td,
+            tbody tr:nth-child(4) td {
+                border-bottom-width: thick;
+            }
+
+            tbody tr:nth-child(4) td:first-child {
+                padding-left: 2.7em;
+                text-indent: -2.2em;
+            }
+
+            &:has(tbody tr:nth-child(4)) tbody {
+                tr:nth-child(1) {
+                    &, & code { color: #6c7191 !important }
+                }
+            }
+
+            &:has(tbody tr:nth-child(6)) tbody {
+                tr:nth-child(2),
+                tr:nth-child(3),
+                tr:nth-child(4) {
+                    &, & code { color: #6c7191 !important }
+                }
+            }
+        }
+
+        aside {
+            z-index: -1;
+        }
+    }
+
+    .reveal-print {
+        .terminal {
+            display: none;
+        }
+    }
+</style>
 
 
-</section>
+</section></section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
@@ -666,9 +1207,9 @@ James Thomas <br> j.thomas@bristol.ac.uk
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
         // specified using percentage units.
-        width: 1050,
+        width: '100%',
 
-        height: 700,
+        height: '100%',
 
         // Factor of the display size that should remain empty around the content
         margin: 0.1,
