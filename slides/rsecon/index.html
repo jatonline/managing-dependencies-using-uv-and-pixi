@@ -150,6 +150,9 @@ James Thomas, j.thomas@bristol.ac.uk
 <li>How these are addressed by <code>uv</code> and <code>pixi</code></li>
 <li><strong>Practical steps</strong> and <strong>recipes</strong> for using them in projects</li>
 </ul>
+<div class="credits">
+<p><img data-src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJQAAACUCAYAAAB1PADUAAAAAXNSR0IB2cksfwAAAARnQU1BAACxjwv8YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAA/ZJREFUeNrt3duO3SAMhWFS7fd/ZXrfVjNDfICK77+rOjtxyJK9BMQ8Y4w5enn++Pf85v+/YwbvP5Lj6Y43+34hfg2AoEBQuIJPQc2O1vDv/v50TzEPf+el71eGgpIHgsLFHirqCZ7g38/FeKrnlVY93ZMcb/bzlL5fGQpKHggKPFQb0Xmn7Hmr09by5v8kKBkKBAWCAg/VRnQeKdtjRePp3t9V7flkKBAUCAp456G6a3K2B+n2MLs959bryVBQ8kBQuNhDdXuC6LzObf8f9Yyl71eGAkGBoHAJzwExzOZn7J7nmgeOuQwFggJBATE+Iz4Psvr3qz4u6lm61/a6PWb1+C29XxkKSh4ICpfwNNTcEfx99h7uas/YPS/VHe+X15ehoOSBoHCRh5oJ18is8dUeIttTZd8v+/mj73MpXhkKSh4ICpeQ0ad8tfdAtOZ3f/ufvUf7tF4MqZ5MhoKSB4LCJbyZA+leO+v2NNVrh6M5vpE8/jIUlDwQFPDurJfqtapuj5S9FtbtMav7WdlTDiUPBAX820Pt3hO+SvU8VtQznebBst/fl+MpQ0HJA0HhEp7RfyZvtUfIXuvaTfVa4AiOrwwFJQ8EhRv5jPx5ndX+TKedlXLad3PVHjD1+jIUlDwQFC7hxJ7Z1fNO3fNsuz1ea49RGQpKHggKF3uo7r7k1fNUu89yOe07vlEZjwwFJQ8EhUt40x8q2zN0f7fX3V9q9Xq7exmE3q8MBSUPBIVLyFjLqz6rZWu/o7F/3uz0/VRThoKSB4LCpR6q9Py0F55rFP9+9Xl2e7Dus3RC4ytDQckDQeFiD9Vxz4iH6d4Hv/vM49I94NnjKUNByQNB4RJ+0tsgex6ke21vJMef7SGzPd1Ifn9L15OhoOSBoHAJP6nn84AYOuOrnkfq7n0wOuOVoaDkgaBwCZ8Xv9ndjyj7O75qz5ftuWbx88lQICgQFPDOQ3Xv2X4W71d9tkz2eHT3dsj2fEvXl6Gg5IGgcAkV3+VFPU31PEv3nu3q8ThqPGUoKHkgKFzkobI9SdRDRD3HqmfafZ7f7r7mqfHIUFDyQFC4hE/CNU7/bm3VU63GM4vjrR6/1PhlKCh5IChc5KF294fK/n3r2SYv7t+9Fte6v02GgpIHgsJFHirb4yzV3ITfZ68NZsf7NI9HtWfloaDkgaCAn63lVdfs7j3Q0fijvReye4Z2e0AZCkoeCArI2Q8VJXutLdsTRj1i9Hmq95ulrlXKUFDyQFDgobaxe96p+yyZ3d8Frsbz5XjIUFDyQFC4hDf9oaprcvdZKEfv0U54vlaPK0NByQNB4WIP1XHPlZpfPU+02yN1P9/q8zovD0oeCAr4m99RvC1JKIYcpAAAAABJRU5ErkJggg==" style="image-rendering:pixelated;width:9em" alt="QR code to the online resources"></p>
+</div>
 <aside class="notes">
 <ul>
 <li>Take home message is that you should use <code>uv</code> and <code>pixi</code> in your projects</li>
@@ -184,7 +187,7 @@ James Thomas, j.thomas@bristol.ac.uk
 <div class="box fragment">
 <p><strong>Like <code>poetry</code>, <code>pipenv</code> or <code>pip-tools</code></strong></p>
 <ul>
-<li>reproducible dependencies installations using a <em>lockfile</em></li>
+<li>reproducible dependency installations using a <em>lockfile</em></li>
 </ul>
 </div>
 </div><div class="column">
@@ -871,6 +874,7 @@ uv run my_script.py</code></pre>
 <li><p><strong>Easier</strong> than <code>conda</code>/<code>pip</code> by themselves</p></li>
 </ul>
 <div class="credits">
+<p><img data-src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJQAAACUCAYAAAB1PADUAAAAAXNSR0IB2cksfwAAAARnQU1BAACxjwv8YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAA/ZJREFUeNrt3duO3SAMhWFS7fd/ZXrfVjNDfICK77+rOjtxyJK9BMQ8Y4w5enn++Pf85v+/YwbvP5Lj6Y43+34hfg2AoEBQuIJPQc2O1vDv/v50TzEPf+el71eGgpIHgsLFHirqCZ7g38/FeKrnlVY93ZMcb/bzlL5fGQpKHggKPFQb0Xmn7Hmr09by5v8kKBkKBAWCAg/VRnQeKdtjRePp3t9V7flkKBAUCAp456G6a3K2B+n2MLs959bryVBQ8kBQuNhDdXuC6LzObf8f9Yyl71eGAkGBoHAJzwExzOZn7J7nmgeOuQwFggJBATE+Iz4Psvr3qz4u6lm61/a6PWb1+C29XxkKSh4ICpfwNNTcEfx99h7uas/YPS/VHe+X15ehoOSBoHCRh5oJ18is8dUeIttTZd8v+/mj73MpXhkKSh4ICpeQ0ad8tfdAtOZ3f/ufvUf7tF4MqZ5MhoKSB4LCJbyZA+leO+v2NNVrh6M5vpE8/jIUlDwQFPDurJfqtapuj5S9FtbtMav7WdlTDiUPBAX820Pt3hO+SvU8VtQznebBst/fl+MpQ0HJA0HhEp7RfyZvtUfIXuvaTfVa4AiOrwwFJQ8EhRv5jPx5ndX+TKedlXLad3PVHjD1+jIUlDwQFC7hxJ7Z1fNO3fNsuz1ea49RGQpKHggKF3uo7r7k1fNUu89yOe07vlEZjwwFJQ8EhUt40x8q2zN0f7fX3V9q9Xq7exmE3q8MBSUPBIVLyFjLqz6rZWu/o7F/3uz0/VRThoKSB4LCpR6q9Py0F55rFP9+9Xl2e7Dus3RC4ytDQckDQeFiD9Vxz4iH6d4Hv/vM49I94NnjKUNByQNB4RJ+0tsgex6ke21vJMef7SGzPd1Ifn9L15OhoOSBoHAJP6nn84AYOuOrnkfq7n0wOuOVoaDkgaBwCZ8Xv9ndjyj7O75qz5ftuWbx88lQICgQFPDOQ3Xv2X4W71d9tkz2eHT3dsj2fEvXl6Gg5IGgcAkV3+VFPU31PEv3nu3q8ThqPGUoKHkgKFzkobI9SdRDRD3HqmfafZ7f7r7mqfHIUFDyQFC4hE/CNU7/bm3VU63GM4vjrR6/1PhlKCh5IChc5KF294fK/n3r2SYv7t+9Fte6v02GgpIHgsJFHirb4yzV3ITfZ68NZsf7NI9HtWfloaDkgaCAn63lVdfs7j3Q0fijvReye4Z2e0AZCkoeCArI2Q8VJXutLdsTRj1i9Hmq95ulrlXKUFDyQFDgobaxe96p+yyZ3d8Frsbz5XjIUFDyQFC4hDf9oaprcvdZKEfv0U54vlaPK0NByQNB4WIP1XHPlZpfPU+02yN1P9/q8zovD0oeCAr4m99RvC1JKIYcpAAAAABJRU5ErkJggg==" style="image-rendering:pixelated;width:9em" alt="QR code to the online resources"></p>
 <p><img data-src="../assets/logo.svg" style="width:9em" alt="University of Bristol, Jean Golding Institute"><br> James Thomas<br> j.thomas@bristol.ac.uk</p>
 <p><small><a href="https://jatonline.github.io/managing-dependencies-using-uv-and-pixi/">jatonline.github.io/managing-<br>dependencies-using-uv-and-pixi</a></small></p>
 </div>
